@@ -6,12 +6,20 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  function login(){
+    setIsLoggedIn(true);
+  }
+
+  function logout(){
+    setIsLoggedIn(false);
+  }
+
   return (
     <>
       <header>
         <NavBar isLoggedIn={isLoggedIn}/>
       </header>
-      <Outlet context={[isLoggedIn, setIsLoggedIn]}/>
+      <Outlet context={[isLoggedIn, login]}/>
     </>
   );
 }
