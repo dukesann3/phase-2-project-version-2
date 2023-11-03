@@ -1,9 +1,9 @@
-import App from "./src/components/App";
-import ErrorPage from "./src/components/ErrorPage";
-import Home from "./src/components/Home";
-import Login from "./src/components/Login";
-import Settings from "./src/components/Settings";
-import UserFeed from "./src/components/UserFeed";
+import App from "./components/App";
+import ErrorPage from "./components/ErrorPage";
+import Home from "./components/Home";
+import Login from "./components/Login";
+import Settings from "./components/Settings";
+import UserFeed from "./components/UserFeed";
 
 const routes = [
     {
@@ -20,12 +20,12 @@ const routes = [
                 element: <Login />,
             },
             {
-                path: '/UserFeed',
+                path: '/UserFeed/:username',
                 element: <UserFeed />
             },
             {
                 path: '/Settings',
-                element: <Settings />,
+                element: <Settings />
             },
         ]
 

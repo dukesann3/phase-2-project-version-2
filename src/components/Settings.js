@@ -1,8 +1,12 @@
+import { useOutletContext } from "react-router-dom";
 
 function Settings() {
+
+    const [isLoggedIn] = useOutletContext();
+
     return (
-      <div className="App">
-  
+      <div>
+        {isLoggedIn ? `Welcome to Settings User` : 'Welcome to Settings'}
       </div>
     );
   }
