@@ -14,7 +14,7 @@ function ErrorPage() {
 
     return (
       <>
-        error bro
+        <h1>ERROR PAGE NOT FOUND 404</h1>
       </>
     );
   }

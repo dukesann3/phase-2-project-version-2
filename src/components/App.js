@@ -1,6 +1,6 @@
 import NavBar from "./NavBar";
 import { Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function App() {
@@ -8,15 +8,9 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('username') ? true: false);
   const navigate = useNavigate();
 
-  function login(){
-
-    fetch('http://localhost:8000/users')
-    .then(response => response.json())
-    .then((data) => {
+  function login(name){
       setIsLoggedIn(true);
-      navigate(`/UserFeed/${data[0].name}`);
-    });
-
+      navigate(`/UserFeed/${name}`);
   }
 
   function logout(){
