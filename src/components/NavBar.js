@@ -9,6 +9,7 @@ function NavBar({isLoggedIn}) {
                   <NavLink to='/'>HOME</NavLink>
                   <NavLink to='/Login'>LOGIN</NavLink>
                   <NavLink to='/Settings'>SETTINGS</NavLink>
+                  LOGGEDOUT
                 </>
               );
         }
@@ -18,6 +19,7 @@ function NavBar({isLoggedIn}) {
                   <NavLink to='/'>HOME</NavLink>
                   <NavLink to='/UserFeed'>USER</NavLink>
                   <NavLink to='/Settings'>SETTINGS</NavLink>
+                  LOGGEDIN
                 </>
               );
         }

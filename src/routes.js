@@ -20,7 +20,7 @@ const routes = [
                 element: <Login />,
             },
             {
-                path: '/UserFeed/:username',
+                path: '/UserFeed',
                 element: <UserFeed />
             },
             {
