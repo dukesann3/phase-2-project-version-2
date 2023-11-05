@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
 
-    const navigate = useNavigate();
     const [isLoggedIn, login, logout] = useOutletContext();
     const [form, setForm] = useState({
         username: '',
@@ -52,7 +51,6 @@ function Login() {
             //Although it is not advisable this is what I know right now.
             localStorage.setItem('username', realUserName);
             localStorage.setItem('password', realPassWord);
-            navigate('/UserFeed');
         }
         else {
             const loginForm = document.querySelector('#loginForm');

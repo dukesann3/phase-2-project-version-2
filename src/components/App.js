@@ -6,13 +6,20 @@ import { useNavigate } from "react-router-dom";
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('username') ? true: false);
+  const navigate = useNavigate();
 
   function login(){
-    setIsLoggedIn(true);
+
+    fetch('http://localhost:8000/users')
+    .then(response => response.json())
+    .then((data) => {
+      setIsLoggedIn(true);
+      navigate(`/UserFeed/${data[0].name}`);
+    });
+
   }
 
   function logout(){
-    console.log('is Logged out')
     setIsLoggedIn(false);
     //removes saved local storage items when logged out.
     localStorage.removeItem('username');
