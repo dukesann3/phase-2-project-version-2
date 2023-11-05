@@ -19,7 +19,6 @@ function Login() {
         onChangeCount.current = onChangeCount.current + 1;
         //logs out because you are now logging into a new account right?
         if(onChangeCount.current === 1){
-            console.log('is log out?')
             logout();
         }
         setForm({
@@ -56,13 +55,20 @@ function Login() {
             navigate('/UserFeed');
         }
         else {
-            alert('password no work homie');
+            const loginForm = document.querySelector('#loginForm');
+            const alertParagraph = document.createElement('p');
+            alertParagraph.textContent = 'Incorrect Username or Password';
+            loginForm.appendChild(alertParagraph);
+            //removes alert message after 3 seconds.
+            setTimeout(()=>{
+                loginForm.removeChild(alertParagraph);
+            },3000);
         }
     }
 
     return (
         <>
-            <form onSubmit={(e) => onSubmital(e)}>
+            <form id='loginForm' onSubmit={(e) => onSubmital(e)}>
                 <input id='username' type='text' name='username' placeholder='username'
                     onChange={(e) => handleChange(e)}
                     value={isLoggedIn ? localStorage.getItem('username') : form.username}
