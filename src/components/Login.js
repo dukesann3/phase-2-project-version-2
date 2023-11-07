@@ -3,12 +3,12 @@ import { useState, useEffect, useRef } from "react";
 
 function Login() {
 
-    const [isLoggedIn, login, logout] = useOutletContext();
+    const [loggedInUserData, login, logout, userPassCheckingAlgo] = useOutletContext();
+    const {isLoggedIn} = loggedInUserData;
     const [form, setForm] = useState({
         username: '',
         password: '',
     });
-    const [userData, setUserData] = useState(null);
     const onChangeCount = useRef(0);
 
     function handleChange(e) {
@@ -43,34 +43,10 @@ function Login() {
         }
     }, [isLoggedIn]);
 
-    //for initial launch
-    useEffect(() => {
-        fetch('http://localhost:8000/users')
-            .then(response => response.json())
-            .then((users) => {
-                setUserData(users);
-            });
-    }, []);
-
-    //checks database to see if username or password match.
-    function userPassCheckingAlgo(data, username, password) {
-        const answer = data.filter((el) => {
-            console.log(el);
-            if (el.username === username && el.password === password) {
-                return true;
-            }
-            return false;
-        })
-        if(answer.length <= 0){
-            return null;
-        }
-        return answer;
-    }
-
     function onSubmital(e) {
         e.preventDefault();
         const { username, password } = form;
-        const user = userPassCheckingAlgo(userData, username, password);
+        const user = userPassCheckingAlgo(username, password);
         if (user) {
             login(user[0].id);
         }
@@ -85,7 +61,6 @@ function Login() {
             }, 3000);
         }
     }
-
 
 return (
     <>

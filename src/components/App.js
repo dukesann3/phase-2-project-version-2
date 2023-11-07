@@ -8,7 +8,15 @@ function App() {
   //sees if user is logged in. If localStorage contains username and password, then user is logged in.
   //login status of user is only a reflection of what is shown in the database.
   //I would like to know who (id) is loggedin as well.
-  const [isLoggedIn, setIsLoggedIn] = useState((localStorage.getItem('username') && localStorage.getItem('password')) ? true : false);
+  const [loggedInUserData, setLoggedInUserData] = useState((localStorage.getItem('id') && localStorage.getItem('isLoggedIn')) ?
+    {
+      id: localStorage.getItem('id'),
+      isLoggedIn: localStorage.getItem('isLoggedIn')
+    } :
+    {
+      id: null,
+      isLoggedIn: false
+    });
 
   //NOTE, THIS IS USER DATABASE ON LOCAL BROWSER. NORMALLY, IT SHOULD BE ON A SERVER?
   //BUT, THIS SHOULD ACCOMODATE FOR PHASE 2.
@@ -20,6 +28,7 @@ function App() {
       .then(response => response.json())
       .then((userList) => {
         setUserDataBase(userList);
+        console.log('did it run after a route change?')
       })
   }, []);
 
@@ -39,34 +48,73 @@ function App() {
     })
       .then(response => response.json())
       .then((patchedData) => {
-        //sets isLoggedIn to be true
-        setIsLoggedIn(true);
+        //sets logged in user's information here.
+        setLoggedInUserData({
+          id: patchedData.id,
+          isLoggedIn: patchedData.isLoggedIn
+        });
+        //stores user information in localstorage in case browser refreshes and useState value is lost completely.
         localStorage.setItem('username', patchedData.username);
         localStorage.setItem('password', patchedData.password);
+        localStorage.setItem('id', patchedData.id);
+        localStorage.setItem('isLoggedIn', true)
         navigate(`/UserFeed/${patchedData.name}`);
       })
       .catch((error) => {
+        alert('invalid request');
         throw Error(error);
-      })
+      });
   }
 
-  function logout() {
+  async function logout() {
     const loginJSONChange = JSON.stringify({
       isLoggedIn: false
     });
+    return await fetch(`http://localhost:8000/users/${loggedInUserData.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: loginJSONChange
+    })
+      .then(response => response.json())
+      .then(() => {
+        //sets logged in user's information here.
+        setLoggedInUserData({
+          id: null,
+          isLoggedIn: false
+        });
+        //removes locally stored user information here
+        localStorage.removeItem('username');
+        localStorage.removeItem('password');
+        localStorage.removeItem('id');
+        localStorage.removeItem('isLoggedIn');
+      })
+      .catch((error) => {
+        throw Error(error);
+      });
+  }
 
-    setIsLoggedIn(false);
-    //removes saved local storage items when logged out.
-    localStorage.removeItem('username');
-    localStorage.removeItem('password');
+  //checks database to see if username or password match.
+  function userPassCheckingAlgo(username, password) {
+    const answer = userDataBase.filter((el) => {
+      if (el.username === username && el.password === password) {
+        return true;
+      }
+      return false;
+    })
+    if (answer.length <= 0) {
+      return null;
+    }
+    return answer;
   }
 
   return (
     <>
       <header>
-        <NavBar isLoggedIn={isLoggedIn} />
+        <NavBar isLoggedIn={loggedInUserData.isLoggedIn} />
       </header>
-      <Outlet context={[isLoggedIn, login, logout]} />
+      <Outlet context={[loggedInUserData, login, logout, userPassCheckingAlgo]} />
     </>
   );
 }

@@ -5,7 +5,7 @@
       "name": "Baba",
       "username": "user",
       "password": "123",
-      "isLoggedIn": true,
+      "isLoggedIn": false,
       "posts": [
         {
           "id": 1,
