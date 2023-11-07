@@ -24,6 +24,7 @@ function Login() {
         })
     }
 
+    //checks if user is already logged in or not.
     useEffect(() => {
         //if it is logged in, get the login values from local Storage.
         if (localStorage.getItem('username') && localStorage.getItem('password')) {
@@ -42,15 +43,16 @@ function Login() {
         }
     }, [isLoggedIn]);
 
+    //for initial launch
     useEffect(() => {
         fetch('http://localhost:8000/users')
             .then(response => response.json())
             .then((users) => {
-                console.log(users);
                 setUserData(users);
             });
     }, []);
 
+    //checks database to see if username or password match.
     function userPassCheckingAlgo(data, username, password) {
         const answer = data.filter((el) => {
             console.log(el);
@@ -62,7 +64,6 @@ function Login() {
         if(answer.length <= 0){
             return null;
         }
-        console.log(answer);
         return answer;
     }
 
@@ -71,11 +72,7 @@ function Login() {
         const { username, password } = form;
         const user = userPassCheckingAlgo(userData, username, password);
         if (user) {
-            login(user[0].name);
-            //when logged in, it stores the username and password in localstorage.
-            //Although it is not advisable this is what I know right now.
-            localStorage.setItem('username', username);
-            localStorage.setItem('password', password);
+            login(user[0].id);
         }
         else {
             const loginForm = document.querySelector('#loginForm');
