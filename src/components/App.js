@@ -11,11 +11,13 @@ function App() {
   const [loggedInUserData, setLoggedInUserData] = useState((localStorage.getItem('id') && localStorage.getItem('isLoggedIn')) ?
     {
       id: localStorage.getItem('id'),
-      isLoggedIn: localStorage.getItem('isLoggedIn')
+      isLoggedIn: localStorage.getItem('isLoggedIn'),
+      name: localStorage.getItem('name')
     } :
     {
       id: null,
-      isLoggedIn: false
+      isLoggedIn: false,
+      name: ''
     });
 
   //NOTE, THIS IS USER DATABASE ON LOCAL BROWSER. NORMALLY, IT SHOULD BE ON A SERVER?
@@ -51,13 +53,15 @@ function App() {
         //sets logged in user's information here.
         setLoggedInUserData({
           id: patchedData.id,
-          isLoggedIn: patchedData.isLoggedIn
+          isLoggedIn: patchedData.isLoggedIn,
+          name: patchedData.name
         });
         //stores user information in localstorage in case browser refreshes and useState value is lost completely.
         localStorage.setItem('username', patchedData.username);
         localStorage.setItem('password', patchedData.password);
         localStorage.setItem('id', patchedData.id);
-        localStorage.setItem('isLoggedIn', true)
+        localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('name', patchedData.name)
         navigate(`/UserFeed/${patchedData.name}`);
       })
       .catch((error) => {
@@ -82,13 +86,15 @@ function App() {
         //sets logged in user's information here.
         setLoggedInUserData({
           id: null,
-          isLoggedIn: false
+          isLoggedIn: false,
+          name: ''
         });
         //removes locally stored user information here
         localStorage.removeItem('username');
         localStorage.removeItem('password');
         localStorage.removeItem('id');
         localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('name');
       })
       .catch((error) => {
         throw Error(error);
@@ -112,7 +118,7 @@ function App() {
   return (
     <>
       <header>
-        <NavBar isLoggedIn={loggedInUserData.isLoggedIn} />
+        <NavBar loggedInUserData={loggedInUserData} />
       </header>
       <Outlet context={[loggedInUserData, login, logout, userPassCheckingAlgo]} />
     </>
