@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 function Login() {
 
     const [loggedInUserData, login, logout, userPassCheckingAlgo] = useOutletContext();
-    const {isLoggedIn} = loggedInUserData;
+    const {isLoggedIn, id} = loggedInUserData;
     const [form, setForm] = useState({
         username: '',
         password: '',
@@ -16,7 +16,7 @@ function Login() {
         onChangeCount.current = onChangeCount.current + 1;
         //logs out because you are now logging into a new account right?
         if (onChangeCount.current === 1) {
-            logout();
+            logout(id);
         }
         setForm({
             ...form,

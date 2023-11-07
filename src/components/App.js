@@ -66,11 +66,11 @@ function App() {
       });
   }
 
-  async function logout() {
+  async function logout(id) {
     const loginJSONChange = JSON.stringify({
       isLoggedIn: false
     });
-    return await fetch(`http://localhost:8000/users/${loggedInUserData.id}`, {
+    return await fetch(`http://localhost:8000/users/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
