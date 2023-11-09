@@ -13,11 +13,12 @@ function UserFeed() {
 
   const [userPosts, setUserPosts] = useState([]);
   const [scrollendQty, setScrollendQty] = useState(1);
+  const [liked, setLiked] = useState(false);
 
   const maxPostsShownAtOnce = 10;
   //postsShownAtATime will increase by 10 when user scrolls to an end.
-  const postsShownAtATime = userPosts.filter((post,index) => {
-    if(maxPostsShownAtOnce*scrollendQty >= index){
+  const postsShownAtATime = userPosts.filter((post, index) => {
+    if (maxPostsShownAtOnce * scrollendQty >= index) {
       return true;
     }
   })
@@ -33,15 +34,21 @@ function UserFeed() {
     }
   }, []);
 
-  function whenScrollEnds(){
+  function whenScrollEnds() {
     //normally it is another get request, but this is without a backend.
-    setScrollendQty(scrollendQty+1);
+    setScrollendQty(scrollendQty + 1);
   }
 
-  window.addEventListener('scrollend', () => {
-    console.log('scrollended');
-    whenScrollEnds();
-  })
+  window.addEventListener('scroll', () => {
+    let body = document.body;
+    let html = document.documentElement;
+    let height = (body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight, html.offsetHeight);
+    console.log([window.pageYOffset, height]);
+    if (window.pageYOffset >= height-700) {
+      whenScrollEnds();
+    }
+  });
 
 
   return (

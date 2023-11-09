@@ -3,7 +3,6 @@ import { Outlet, createSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
-import generatePosts from "../genereator";
 
 function App() {
 
@@ -123,21 +122,12 @@ function App() {
     return answer;
   }
 
-  function downloadTextAsFile(){
-    const blob = new Blob([generatePosts()], {type: 'text/plain'});
-    const url = URL.createObjectURL(blob);
-    return (
-      <a href={url} download='social_media_posts'>click</a>
-    )
-  }
-
   return (
     <>
       <header>
         <NavBar loggedInUserData={loggedInUserData} logout={logout} />
       </header>
       <Outlet context={[loggedInUserData, login, logout, userPassCheckingAlgo, isDarkRef]} />
-      {downloadTextAsFile()}
     </>
   );
 }
