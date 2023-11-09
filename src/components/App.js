@@ -2,6 +2,7 @@ import NavBar from "./NavBar";
 import { Outlet, createSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 function App() {
 
@@ -24,9 +25,6 @@ function App() {
   //BUT, THIS SHOULD ACCOMODATE FOR PHASE 2.
   const [userDataBase, setUserDataBase] = useState([]);
 
-  //isDark Mode or Not
-  const [isDark, setIsDark] = useState(false);
-
   //want to run useEffect every time userDataBase is updated.
   useEffect(() => {
     fetch(`http://localhost:8000/users`)
@@ -37,6 +35,7 @@ function App() {
   }, []);
 
   const navigate = useNavigate();
+  let isDarkRef = useRef();
 
   //user logs in. Sends patch request to set isLoggedIn value to be true.
   async function login(id) {
@@ -128,7 +127,7 @@ function App() {
       <header>
         <NavBar loggedInUserData={loggedInUserData} logout={logout} />
       </header>
-      <Outlet context={[loggedInUserData, login, logout, userPassCheckingAlgo, isDark, setIsDark]} />
+      <Outlet context={[loggedInUserData, login, logout, userPassCheckingAlgo, isDarkRef]} />
     </>
   );
 }
