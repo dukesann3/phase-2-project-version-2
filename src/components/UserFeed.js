@@ -7,8 +7,10 @@ import UserPost from "./UserPost";
 function UserFeed() {
 
   const { username } = useParams();
+
   const [loggedInUserData] = useOutletContext();
   const { isLoggedIn, id } = loggedInUserData;
+
   const [userPosts, setUserPosts] = useState([]);
   const [scrollendQty, setScrollendQty] = useState(1);
 
@@ -45,7 +47,6 @@ function UserFeed() {
   return (
     <div>
       <h1>{`${username}'s page`}</h1>
-      <h3>{'placeholder'}</h3>
       <div>
         {userPosts ? postsShownAtATime.map((post) => {
           return <UserPost key={post.id} flatpost={post} />

@@ -1,5 +1,5 @@
 import NavBar from "./NavBar";
-import { Outlet } from "react-router-dom";
+import { Outlet, createSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,13 +24,15 @@ function App() {
   //BUT, THIS SHOULD ACCOMODATE FOR PHASE 2.
   const [userDataBase, setUserDataBase] = useState([]);
 
+  //isDark Mode or Not
+  const [isDark, setIsDark] = useState(false);
+
   //want to run useEffect every time userDataBase is updated.
   useEffect(() => {
     fetch(`http://localhost:8000/users`)
       .then(response => response.json())
       .then((userList) => {
         setUserDataBase(userList);
-        console.log('did it run after a route change?')
       })
   }, []);
 
@@ -48,7 +50,12 @@ function App() {
       },
       body: loginJSONChange
     })
-      .then(response => response.json())
+      .then((response) => {
+        if(!response.ok){
+          throw new Error('invalid request');
+        }
+        return response.json();
+      })
       .then((patchedData) => {
         //sets logged in user's information here.
         setLoggedInUserData({
@@ -57,16 +64,17 @@ function App() {
           name: patchedData.name
         });
         //stores user information in localstorage in case browser refreshes and useState value is lost completely.
+        console.log(patchedData);
         localStorage.setItem('username', patchedData.username);
         localStorage.setItem('password', patchedData.password);
         localStorage.setItem('id', patchedData.id);
         localStorage.setItem('isLoggedIn', true);
-        localStorage.setItem('name', patchedData.name)
+        localStorage.setItem('name', patchedData.name);
         navigate(`/UserFeed/${patchedData.name}`);
       })
       .catch((error) => {
         alert('invalid request');
-        throw Error(error);
+        console.log(error);
       });
   }
 
@@ -118,9 +126,9 @@ function App() {
   return (
     <>
       <header>
-        <NavBar loggedInUserData={loggedInUserData} />
+        <NavBar loggedInUserData={loggedInUserData} logout={logout} />
       </header>
-      <Outlet context={[loggedInUserData, login, logout, userPassCheckingAlgo]} />
+      <Outlet context={[loggedInUserData, login, logout, userPassCheckingAlgo, isDark, setIsDark]} />
     </>
   );
 }

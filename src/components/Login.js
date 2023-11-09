@@ -15,7 +15,7 @@ function Login() {
         //need to logout when it first changes value here.
         onChangeCount.current = onChangeCount.current + 1;
         //logs out because you are now logging into a new account right?
-        if (onChangeCount.current === 1) {
+        if (onChangeCount.current === 1 && isLoggedIn) {
             logout(id);
         }
         setForm({
@@ -48,6 +48,8 @@ function Login() {
         const { username, password } = form;
         const user = userPassCheckingAlgo(username, password);
         if (user) {
+            //check if user is being bypassed here.
+            debugger;
             login(user[0].id);
         }
         else {

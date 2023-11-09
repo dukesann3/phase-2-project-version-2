@@ -5,7 +5,13 @@
       "name": "Baba",
       "username": "user",
       "password": "123",
-      "isLoggedIn": true,
+      "isLoggedIn": false,
+      "friends": [
+        "Inoki",
+        "Kuma",
+        "Antonio",
+        "Bartholomeuw"
+      ],
       "posts": [
         {
           "id": 1,
@@ -609,6 +615,7 @@
       "username": "yeet",
       "password": "this is empty",
       "isLoggedIn": false,
+      "friends": [],
       "posts": [
         {
           "id": 1,
