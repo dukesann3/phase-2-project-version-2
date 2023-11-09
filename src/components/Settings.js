@@ -1,6 +1,5 @@
 import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
-import { useRef } from "react";
 
 function Settings() {
 
