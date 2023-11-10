@@ -7,12 +7,10 @@ function Settings() {
   const { id, name, isLoggedIn } = loggedInUserData;
 
   const [isDark, setIsDark] = useState(isDarkRef ? isDarkRef.current : false);
-  console.log(isDarkRef.current);
 
   //btn that makes brwoser screen light or dark
   function switchMode() {
     if (!isDark) {
-      console.log('not updating?')
       window.document.body.style.background = 'black';
       window.document.body.style.color = 'white';
       isDarkRef.current = true;

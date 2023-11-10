@@ -8,7 +8,7 @@ function UserFeed() {
 
   const { username } = useParams();
 
-  const [loggedInUserData] = useOutletContext();
+  const [loggedInUserData, login, logout, userPassCheckingAlgo, isDarkRef] = useOutletContext();
   const { isLoggedIn, id } = loggedInUserData;
 
   const [userPosts, setUserPosts] = useState([]);
@@ -21,7 +21,7 @@ function UserFeed() {
     if (maxPostsShownAtOnce * scrollendQty >= index) {
       return true;
     }
-  })
+  });
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -44,19 +44,17 @@ function UserFeed() {
     let html = document.documentElement;
     let height = (body.scrollHeight, body.offsetHeight,
       html.clientHeight, html.scrollHeight, html.offsetHeight);
-    console.log([window.pageYOffset, height]);
-    if (window.pageYOffset >= height-700) {
+    if (window.pageYOffset >= height-580) {
       whenScrollEnds();
     }
   });
-
 
   return (
     <div>
       <h1>{`${username}'s page`}</h1>
       <div>
         {userPosts ? postsShownAtATime.map((post) => {
-          return <UserPost key={post.id} flatpost={post} />
+          return <UserPost key={post.id} flatpost={post} setLiked={setLiked} liked={liked} />
         }) : <h2>Loading...</h2>}
       </div>
     </div>
