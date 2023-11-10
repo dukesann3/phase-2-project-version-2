@@ -29,6 +29,9 @@ function UserFeed() {
         .then(response => response.json())
         .then((fetchedData) => {
           const { posts } = fetchedData;
+          posts.forEach((post) => {
+            post.isHidden = false;
+          })
           setUserPosts(posts);
         })
     }
@@ -49,12 +52,21 @@ function UserFeed() {
     }
   });
 
+  function onHideShow(idHideShow){
+    setUserPosts(userPosts.map((post) => {
+      if(post.id === idHideShow){
+        post.isHidden = !post.isHidden;
+      }
+      return post
+    }));
+  }
+
   return (
     <div>
       <h1>{`${username}'s page`}</h1>
       <div>
         {userPosts ? postsShownAtATime.map((post) => {
-          return <UserPost key={post.id} flatpost={post} setLiked={setLiked} liked={liked} />
+          return <UserPost key={post.id} flatpost={post} setLiked={setLiked} liked={liked} onHideShow={onHideShow}/>
         }) : <h2>Loading...</h2>}
       </div>
     </div>

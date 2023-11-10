@@ -37,12 +37,6 @@ function App() {
   const navigate = useNavigate();
   let isDarkRef = useRef();
 
-  const [hiddenData, setHiddenData] = useState([{
-    postId: null,
-    isHidden: false,
-  }]);
-  console.log(hiddenData);
-
   //user logs in. Sends patch request to set isLoggedIn value to be true.
   async function login(id) {
     const loginJSONChange = JSON.stringify({
@@ -133,7 +127,7 @@ function App() {
       <header>
         <NavBar loggedInUserData={loggedInUserData} logout={logout} />
       </header>
-      <Outlet context={[loggedInUserData, login, logout, userPassCheckingAlgo, isDarkRef, hiddenData, setHiddenData]} />
+      <Outlet context={[loggedInUserData, login, logout, userPassCheckingAlgo, isDarkRef]} />
     </>
   );
 }

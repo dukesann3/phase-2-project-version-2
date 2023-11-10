@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-function UserPost({ flatpost, setLiked, liked }) {
+function UserPost({ flatpost, setLiked, liked, onHideShow }) {
 
-    const { timestamp, author, post, likes, id } = flatpost;
+    const { timestamp, author, post, likes, id, isHidden } = flatpost;
     const [likeCount, setLikeCount] = useState(likes);
 
     //normally I would like to use a PATCH request to update the like count, but JSON-server doesn't permit this 
@@ -18,15 +18,24 @@ function UserPost({ flatpost, setLiked, liked }) {
         }
     }
 
+    function onActionHideShow() {
+        if (!isHidden) {
+            onHideShow(id);
+        }
+        else {
+            onHideShow(id);
+        }
+    }
+
     return (
         <div>
-            <div className='postWithoutBtn'>
+            {!isHidden ? <div className='postWithoutBtn'>
                 <h3>{author}</h3>
                 <p>{post}</p>
                 <p onClick={() => onLike()}>LIKES: {likeCount}</p>
                 <p>{timestamp}</p>
-            </div>
-            <button>HIDE</button>
+            </div> : null}
+            <button onClick={() => onActionHideShow()}>HIDE?</button>
         </div>
     )
 }
