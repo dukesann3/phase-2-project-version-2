@@ -4,54 +4,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetch from "./customHooks/useFetch";
 import useDark from "./customHooks/useDark";
+import { addUserToLocalStore, removeUserFromLocalStore } from "./helperfunctions/localStorageManipulation.js/addRemoveUserFromLocalStore";
+import userPassCheckingAlgo from "./helperfunctions/localStorageManipulation.js/userLoginCheck";
 
 function App() {
 
   const [userDataBase, setUserDataBase] = useFetch('http://localhost:8000/users');
   const [isDark, setIsDark] = useDark();
-  //const [userDataBase, setUserDataBase] = useState(localStorage.getItem('theEntireThing') ? JSON.parse(localStorage.getItem('theEntireThing')) : []);
   const loggedInUsersPostsList = typeof findUserIdThatIsLoggedIn() === 'number' ? userDataBase[findUserIdThatIsLoggedIn()].posts : null;
 
   const navigate = useNavigate();
-
   const localId = parseInt(localStorage.getItem('id'), 10);
-
-  //const [isDark, setIsDark] = useState(localStorage.getItem('isDark') ? JSON.parse(localStorage.getItem('isDark')) : false);
-  /*
-    useEffect(() => {
-      if (!localStorage.getItem('theEntireThing')) {
-        fetch(`http://localhost:8000/users`)
-          .then(response => response.json())
-          .then((userList) => {
-            userList.forEach((user) => {
-              const { posts } = user;
-              for (let post of posts) {
-                post.isHidden = false;
-              }
-            })
-            setUserDataBase(userList);
-            const copyOfUserList = [...userList];
-            const stringOfCopyOfUserList = JSON.stringify(copyOfUserList);
-            localStorage.setItem('theEntireThing', stringOfCopyOfUserList);
-          })
-      }
-    }, []);
-    */
-
-  /*
-    useEffect(() => {
-      if (JSON.parse(localStorage.getItem('isDark')) === false) {
-        setIsDark(false);
-        window.document.body.style.background = 'white';
-        window.document.body.style.color = 'black';
-      }
-      else {
-        setIsDark(true);
-        window.document.body.style.background = 'black';
-        window.document.body.style.color = 'white';
-      }
-    },[])
-  */
 
   async function login(id) {
     const loginJSONChange = JSON.stringify({
@@ -132,24 +95,7 @@ function App() {
     localStorage.setItem('theEntireThing', stringifiedUpdatedUserDataBase);
   }
 
-  function removeUserFromLocalStore(listOfUserInfo) {
-    if (Array.isArray(listOfUserInfo) && typeof listOfUserInfo === 'object') {
-      throw new Error('Variable Is Not an Object');
-    }
-    for (let listItem in listOfUserInfo) {
-      localStorage.removeItem(listItem);
-    }
-  }
-
-  function addUserToLocalStore(listOfUserInfo) {
-    if (Array.isArray(listOfUserInfo) && typeof listOfUserInfo === 'object') {
-      throw new Error('Variable Is Not an Object');
-    }
-    for (let listItem in listOfUserInfo) {
-      localStorage.setItem(listItem, listOfUserInfo[listItem])
-    }
-  }
-
+/*
   function userPassCheckingAlgo(username, password) {
     const answer = userDataBase.filter((el) => {
       if (el.username === username && el.password === password) {
@@ -162,6 +108,8 @@ function App() {
     }
     return answer;
   }
+
+  */
 
   function switchMode() {
 

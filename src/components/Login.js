@@ -42,7 +42,7 @@ function Login() {
     function onSubmital(e) {
         e.preventDefault();
         const { username, password } = form;
-        const matchingUser = userPassCheckingAlgo(username, password);
+        const matchingUser = userPassCheckingAlgo(userDataBase, username, password);
         if (matchingUser) {
             const matchingUserId = matchingUser[0].id
             login(matchingUserId);
