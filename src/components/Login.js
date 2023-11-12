@@ -45,7 +45,6 @@ function Login() {
         const matchingUser = userPassCheckingAlgo(username, password);
         if (matchingUser) {
             const matchingUserId = matchingUser[0].id
-            debugger;
             login(matchingUserId);
         }
         else {

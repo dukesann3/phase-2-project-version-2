@@ -7,7 +7,7 @@ function NavBar({logout, userDataBase, findUserIdThatIsLoggedIn}) {
 
     function displayNavBar(){
 
-        if(!userIdThatIsLoggedIn){
+        if(!userIdThatIsLoggedIn || !localUserName){
 
             return (
                 <>
