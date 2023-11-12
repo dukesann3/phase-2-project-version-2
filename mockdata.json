@@ -5,7 +5,7 @@
       "name": "Baba",
       "username": "user",
       "password": "123",
-      "isLoggedIn": false,
+      "isLoggedIn": true,
       "friends": [
         "Inoki",
         "Kuma",

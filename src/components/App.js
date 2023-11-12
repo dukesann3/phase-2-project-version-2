@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 function App() {
 
   const [userDataBase, setUserDataBase] = useState(localStorage.getItem('theEntireThing') ? JSON.parse(localStorage.getItem('theEntireThing')) : []);
+  const loggedInUsersPostsList = typeof findUserIdThatIsLoggedIn() === 'number' ? userDataBase[findUserIdThatIsLoggedIn()].posts : null;
+
   const navigate = useNavigate();
 
-  let hiddenPostsList = localStorage.getItem('hiddenPostIds') ? JSON.parse(localStorage.getItem('hiddenPostIds')) : [];
   const localId = parseInt(localStorage.getItem('id'), 10);
 
   const [isDark, setIsDark] = useState(localStorage.getItem('isDark') ? JSON.parse(localStorage.getItem('isDark')) : false);
@@ -115,16 +116,6 @@ function App() {
         user.posts.forEach((post) => {
           if (post.id === idHideShow) {
             post.isHidden = !post.isHidden;
-            if (post.isHidden) {
-              hiddenPostsList.push(post.id);
-              const hiddenPostString = JSON.stringify(hiddenPostsList);
-              localStorage.setItem('hiddenPostIds', hiddenPostString);
-            }
-            else {
-              hiddenPostsList = hiddenPostsList.filter(id => id !== idHideShow);
-              const hiddenPostString = JSON.stringify(hiddenPostsList);
-              localStorage.setItem('hiddenPostIds', hiddenPostString);
-            }
           }
         })
       }
@@ -170,7 +161,6 @@ function App() {
 
     if(!localStorage.getItem('isDark')){
       localStorage.setItem('isDark', false);
-      debugger;
     }
 
     if (isDark === true) {
@@ -205,9 +195,7 @@ function App() {
     if(allUsersThatAreLoggedIn.length > 1 || allUsersThatAreLoggedIn.length === 0){
       return false;
     }
-
-    return allUsersThatAreLoggedIn[0].id
-
+    return allUsersThatAreLoggedIn[0].id-1
   }
 
   return (
@@ -215,7 +203,7 @@ function App() {
       <header>
         <NavBar logout={logout} userDataBase={userDataBase} findUserIdThatIsLoggedIn={findUserIdThatIsLoggedIn}/>
       </header>
-      <Outlet context={[login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode]} />
+      <Outlet context={[login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode, loggedInUsersPostsList]} />
     </>
   );
 }
