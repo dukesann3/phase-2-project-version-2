@@ -1,41 +1,26 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserPost from "./UserPost";
+
 
 function UserFeed() {
 
   const { username } = useParams();
+  const [login, logout, userPassCheckingAlgo, isDarkRef, userDataBase, setUserDataBase, onHideShowPost] = useOutletContext();
 
-  const [loggedInUserData, login, logout, userPassCheckingAlgo, isDarkRef] = useOutletContext();
-  const { isLoggedIn, id } = loggedInUserData;
+  const localId = parseInt(localStorage.getItem('id'),10);
 
-  const [userPosts, setUserPosts] = useState([]);
   const [scrollendQty, setScrollendQty] = useState(1);
   const [liked, setLiked] = useState(false);
 
   const maxPostsShownAtOnce = 10;
-  //postsShownAtATime will increase by 10 when user scrolls to an end.
-  const postsShownAtATime = userPosts.filter((post, index) => {
+  debugger;
+  const postsShownAtATime = userDataBase[localId-1].posts ? userDataBase[localId - 1].posts.filter((post, index) => {
     if (maxPostsShownAtOnce * scrollendQty >= index) {
       return true;
     }
-  });
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetch(`http://localhost:8000/users/${id}`)
-        .then(response => response.json())
-        .then((fetchedData) => {
-          const { posts } = fetchedData;
-          posts.forEach((post) => {
-            post.isHidden = false;
-          })
-          setUserPosts(posts);
-        })
-    }
-  }, []);
+  }) : null
 
   function whenScrollEnds() {
     //normally it is another get request, but this is without a backend.
@@ -47,26 +32,18 @@ function UserFeed() {
     let html = document.documentElement;
     let height = (body.scrollHeight, body.offsetHeight,
       html.clientHeight, html.scrollHeight, html.offsetHeight);
-    if (window.pageYOffset >= height-580) {
+    if (window.pageYOffset >= height - 580) {
       whenScrollEnds();
     }
   });
 
-  function onHideShow(idHideShow){
-    setUserPosts(userPosts.map((post) => {
-      if(post.id === idHideShow){
-        post.isHidden = !post.isHidden;
-      }
-      return post
-    }));
-  }
 
   return (
     <div>
       <h1>{`${username}'s page`}</h1>
       <div>
-        {userPosts ? postsShownAtATime.map((post) => {
-          return <UserPost key={post.id} flatpost={post} setLiked={setLiked} liked={liked} onHideShow={onHideShow}/>
+        {postsShownAtATime ? postsShownAtATime.map((post) => {
+          return <UserPost key={post.id} flatpost={post} setLiked={setLiked} liked={liked} onHideShow={onHideShowPost} />
         }) : <h2>Loading...</h2>}
       </div>
     </div>
@@ -75,17 +52,3 @@ function UserFeed() {
 
 export default UserFeed;
 
-
-
-
-//add functionality to posts that are shown at once.
-/*
-function onChangeScroll(){
-  ref = window.pageYOffset;
-  console.log(ref);
-}
-
-window.addEventListener('scroll', () => {
-  onChangeScroll();
-})
-*/

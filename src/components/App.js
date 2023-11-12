@@ -6,38 +6,33 @@ import { useRef } from "react";
 
 function App() {
 
-  //sees if user is logged in. If localStorage contains username and password, then user is logged in.
-  //login status of user is only a reflection of what is shown in the database.
-  //I would like to know who (id) is loggedin as well.
-  const [loggedInUserData, setLoggedInUserData] = useState((localStorage.getItem('id') && localStorage.getItem('isLoggedIn')) ?
-    {
-      id: localStorage.getItem('id'),
-      isLoggedIn: localStorage.getItem('isLoggedIn'),
-      name: localStorage.getItem('name')
-    } :
-    {
-      id: null,
-      isLoggedIn: false,
-      name: ''
-    });
-
-  //NOTE, THIS IS USER DATABASE ON LOCAL BROWSER. NORMALLY, IT SHOULD BE ON A SERVER?
-  //BUT, THIS SHOULD ACCOMODATE FOR PHASE 2.
-  const [userDataBase, setUserDataBase] = useState([]);
-
-  //want to run useEffect every time userDataBase is updated.
-  useEffect(() => {
-    fetch(`http://localhost:8000/users`)
-      .then(response => response.json())
-      .then((userList) => {
-        setUserDataBase(userList);
-      })
-  }, []);
-
+  const [userDataBase, setUserDataBase] = useState(localStorage.getItem('theEntireThing') ? JSON.parse(localStorage.getItem('theEntireThing')) : []);
   const navigate = useNavigate();
   let isDarkRef = useRef();
 
-  //user logs in. Sends patch request to set isLoggedIn value to be true.
+  let hiddenPostsList = localStorage.getItem('hiddenPostIds') ? JSON.parse(localStorage.getItem('hiddenPostIds')) : [];
+  const localId = parseInt(localStorage.getItem('id'), 10);
+
+  useEffect(() => {
+    if (!localStorage.getItem('theEntireThing')) {
+      fetch(`http://localhost:8000/users`)
+        .then(response => response.json())
+        .then((userList) => {
+          userList.forEach((user) => {
+            const { posts } = user;
+            for (let post of posts) {
+              post.isHidden = false;
+            }
+          })
+          setUserDataBase(userList);
+          const copyOfUserList = [...userList];
+          const stringOfCopyOfUserList = JSON.stringify(copyOfUserList);
+          localStorage.setItem('theEntireThing', stringOfCopyOfUserList);
+        })
+    }
+  }, []);
+
+
   async function login(id) {
     const loginJSONChange = JSON.stringify({
       isLoggedIn: true
@@ -50,26 +45,15 @@ function App() {
       body: loginJSONChange
     })
       .then((response) => {
-        if(!response.ok){
+        if (!response.ok) {
           throw new Error('invalid request');
         }
         return response.json();
       })
-      .then((patchedData) => {
-        //sets logged in user's information here.
-        setLoggedInUserData({
-          id: patchedData.id,
-          isLoggedIn: patchedData.isLoggedIn,
-          name: patchedData.name
-        });
-        //stores user information in localstorage in case browser refreshes and useState value is lost completely.
-        console.log(patchedData);
-        localStorage.setItem('username', patchedData.username);
-        localStorage.setItem('password', patchedData.password);
-        localStorage.setItem('id', patchedData.id);
-        localStorage.setItem('isLoggedIn', true);
-        localStorage.setItem('name', patchedData.name);
-        navigate(`/UserFeed/${patchedData.name}`);
+      .then((retrievedData) => {
+        addUserToLocalStore(retrievedData);
+        debugger;
+        navigate(`/UserFeed/${retrievedData.name}`);
       })
       .catch((error) => {
         alert('invalid request');
@@ -89,26 +73,77 @@ function App() {
       body: loginJSONChange
     })
       .then(response => response.json())
-      .then(() => {
-        //sets logged in user's information here.
-        setLoggedInUserData({
-          id: null,
-          isLoggedIn: false,
-          name: ''
-        });
-        //removes locally stored user information here
-        localStorage.removeItem('username');
-        localStorage.removeItem('password');
-        localStorage.removeItem('id');
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('name');
+      .then((retrievedData) => {
+        removeUserFromLocalStore(retrievedData);
       })
       .catch((error) => {
         throw Error(error);
       });
   }
 
-  //checks database to see if username or password match.
+  function onHideShowPost(idHideShow) {
+    let updatedUserDataBase = [...userDataBase];
+    updatedUserDataBase.forEach((user) => {
+      if (user.id === localId) {
+        user.posts.forEach((post) => {
+          if (post.id === idHideShow) {
+            post.isHidden = !post.isHidden;
+            if (post.isHidden) {
+              hiddenPostsList.push(post.id);
+              const hiddenPostString = JSON.stringify(hiddenPostsList);
+              localStorage.setItem('hiddenPostIds', hiddenPostString);
+            }
+            else {
+              hiddenPostsList = hiddenPostsList.filter(id => id !== idHideShow);
+              const hiddenPostString = JSON.stringify(hiddenPostsList);
+              localStorage.setItem('hiddenPostIds', hiddenPostString);
+            }
+          }
+        })
+      }
+    });
+    console.log(updatedUserDataBase);
+    setUserDataBase(updatedUserDataBase);
+  }
+
+
+  function swapIsHiddenWithLocalValue() {
+    /*
+      Checks if localStorage has hiddenpost ids scattered around
+      If it doesn't, then throw an error.
+      If it does, then get the localStorage hidden post ids and JSON.parse it so it can be read.
+      Then, map a copy of the current userData and make isHidden to be true for matching post ids
+      ..., that's it I guess.
+    */
+
+    if (!localStorage.getItem('hiddenPostIds')) {
+      throw Error('Local Storage Value \'hidden posts\' Does Not Exist');
+    }
+
+    const locallyStoredHiddenPosts = JSON.parse(localStorage.getItem('hiddenPostIds'));
+    console.log(locallyStoredHiddenPosts);
+
+  }
+
+
+  function removeUserFromLocalStore(listOfUserInfo) {
+    if (Array.isArray(listOfUserInfo) && typeof listOfUserInfo === 'object') {
+      throw new Error('Variable Is Not an Object');
+    }
+    for (let listItem in listOfUserInfo) {
+      localStorage.removeItem(listItem);
+    }
+  }
+
+  function addUserToLocalStore(listOfUserInfo) {
+    if (Array.isArray(listOfUserInfo) && typeof listOfUserInfo === 'object') {
+      throw new Error('Variable Is Not an Object');
+    }
+    for (let listItem in listOfUserInfo) {
+      localStorage.setItem(listItem, listOfUserInfo[listItem])
+    }
+  }
+
   function userPassCheckingAlgo(username, password) {
     const answer = userDataBase.filter((el) => {
       if (el.username === username && el.password === password) {
@@ -122,12 +157,14 @@ function App() {
     return answer;
   }
 
+  //make function that sees whether localStorage login id and actual logged in id in database match...
+
   return (
     <>
       <header>
-        <NavBar loggedInUserData={loggedInUserData} logout={logout} />
+        <NavBar logout={logout} />
       </header>
-      <Outlet context={[loggedInUserData, login, logout, userPassCheckingAlgo, isDarkRef]} />
+      <Outlet context={[login, logout, userPassCheckingAlgo, isDarkRef, userDataBase, setUserDataBase, onHideShowPost]} />
     </>
   );
 }

@@ -18,15 +18,6 @@ function UserPost({ flatpost, setLiked, liked, onHideShow }) {
         }
     }
 
-    function onActionHideShow() {
-        if (!isHidden) {
-            onHideShow(id);
-        }
-        else {
-            onHideShow(id);
-        }
-    }
-
     return (
         <div>
             {!isHidden ? <div className='postWithoutBtn'>
@@ -35,7 +26,7 @@ function UserPost({ flatpost, setLiked, liked, onHideShow }) {
                 <p onClick={() => onLike()}>LIKES: {likeCount}</p>
                 <p>{timestamp}</p>
             </div> : null}
-            <button onClick={() => onActionHideShow()}>HIDE?</button>
+            <button onClick={() => onHideShow(id)}>HIDE?</button>
         </div>
     )
 }

@@ -3,59 +3,29 @@ import { useState } from "react";
 
 function Settings() {
 
-  const [loggedInUserData, login, logout, userPassCheckingAlgo, isDarkRef] = useOutletContext();
-  const { id, name, isLoggedIn } = loggedInUserData;
+  const [login, logout, userPassCheckingAlgo, isDarkRef, userDataBase, setUserDataBase, onHideShowPost] = useOutletContext();
+  const localLogInStatus = localStorage.getItem('isLoggedIn');
+  const localUserName = localStorage.getItem('name');
 
-  const [isDark, setIsDark] = useState(isDarkRef ? isDarkRef.current : false);
-
-  //btn that makes brwoser screen light or dark
   function switchMode() {
-    if (!isDark) {
+    if (!isDarkRef.current) {
       window.document.body.style.background = 'black';
       window.document.body.style.color = 'white';
       isDarkRef.current = true;
-      setIsDark(true);
     }
     else {
       window.document.body.style.background = 'white';
       window.document.body.style.color = 'black';
       isDarkRef.current = false;
-      setIsDark(false);
     }
     return;
   }
 
-  /*
-  function getIsDarkCookieValue() {
-    //try using cookies to store isDark information
-    const allCookies = document.cookie;
-    //gives back [isDark=value]
-    const cookieArray = allCookies.split(';');
-    const isDarkCookie = cookieArray.find((el) => {
-      if(el.includes('isDark')){
-        return true;
-      }
-    })
-    const splitString = isDarkCookie.split('=');
-    const isDarkValue = splitString.find((el) => {
-      if(el === 'isDark'){
-        return false;
-      }
-      return true;
-    })
-    console.log(isDarkValue)
-    return isDarkValue;
-  }
-  */
-
-  //displays user's friends to block...
-  //this is JSX only found when user is loggedin
-
   return (
     <div>
-      {isLoggedIn ? `${name}'s Settings` : 'Welcome to Settings'}
+      {localLogInStatus ? `${localUserName}'s Settings` : 'Welcome to Settings'}
       <div className='drkmode-btn'>
-        <button onClick={() => switchMode()}>{isDark ? 'LIGHT MODE' : 'DARK MODE'}</button>
+        <button onClick={() => switchMode()}>{isDarkRef ? 'LIGHT MODE' : 'DARK MODE'}</button>
       </div>
     </div>
   );

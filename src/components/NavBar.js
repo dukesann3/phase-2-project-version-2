@@ -1,11 +1,13 @@
 import { NavLink } from "react-router-dom";
 
-function NavBar({loggedInUserData, logout}) {
+function NavBar({logout}) {
 
-  const {name, isLoggedIn, id} = loggedInUserData;
+  const localLogInStatus = localStorage.getItem('isLoggedIn');
+  const localUserName = localStorage.getItem('username');
+  const localId = localStorage.getItem('id');
 
     function displayNavBar(){
-        if(!isLoggedIn){
+        if(!localLogInStatus){
             return (
                 <>
                   <NavLink to='/'>HOME</NavLink>
@@ -18,9 +20,9 @@ function NavBar({loggedInUserData, logout}) {
             return (
                 <>
                   <NavLink to='/'>HOME</NavLink>
-                  <NavLink to={`/UserFeed/${name}`}>USER</NavLink>
+                  <NavLink to={`/UserFeed/${localUserName}`}>USER</NavLink>
                   <NavLink to='/Settings'>SETTINGS</NavLink>
-                  <NavLink to='/Login' onClick={() => logout(id)}>LOGOUT</NavLink>
+                  <NavLink to='/Login' onClick={() => logout(localId)}>LOGOUT</NavLink>
                 </>
               );
         }

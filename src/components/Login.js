@@ -1,22 +1,21 @@
 import { useOutletContext } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 function Login() {
 
-    const [loggedInUserData, login, logout, userPassCheckingAlgo] = useOutletContext();
-    const {isLoggedIn, id} = loggedInUserData;
+    const [login, logout, userPassCheckingAlgo, isDarkRef, userDataBase, setUserDataBase, onHideShowPost] = useOutletContext();
+    const localLogInStatus = localStorage.getItem('isLoggedIn');
+    const localId = JSON.parse(localStorage.getItem('id')-1);
+
     const [form, setForm] = useState({
         username: '',
         password: '',
     });
-    const onChangeCount = useRef(0);
 
     function handleChange(e) {
-        //need to logout when it first changes value here.
-        onChangeCount.current = onChangeCount.current + 1;
-        //logs out because you are now logging into a new account right?
-        if (onChangeCount.current === 1 && isLoggedIn) {
-            logout(id);
+
+        if (localLogInStatus) {
+            logout(localId);
         }
         setForm({
             ...form,
@@ -24,9 +23,7 @@ function Login() {
         })
     }
 
-    //checks if user is already logged in or not.
     useEffect(() => {
-        //if it is logged in, get the login values from local Storage.
         if (localStorage.getItem('username') && localStorage.getItem('password')) {
             setForm({
                 ...form,
@@ -41,23 +38,23 @@ function Login() {
                 password: ''
             });
         }
-    }, [isLoggedIn]);
+    }, [localLogInStatus]);
 
     function onSubmital(e) {
         e.preventDefault();
         const { username, password } = form;
-        const user = userPassCheckingAlgo(username, password);
-        if (user) {
-            //check if user is being bypassed here.
+        const matchingUser = userPassCheckingAlgo(username, password);
+        if (matchingUser) {
+            const matchingUserId = matchingUser[0].id
             debugger;
-            login(user[0].id);
+            login(matchingUserId);
         }
         else {
             const loginForm = document.querySelector('#loginForm');
             const alertParagraph = document.createElement('p');
             alertParagraph.textContent = 'Incorrect Username or Password';
             loginForm.appendChild(alertParagraph);
-            //removes alert message after 3 seconds.
+
             setTimeout(() => {
                 loginForm.removeChild(alertParagraph);
             }, 3000);
@@ -69,13 +66,13 @@ return (
         <form id='loginForm' onSubmit={(e) => onSubmital(e)}>
             <input id='username' type='text' name='username' placeholder='username'
                 onChange={(e) => handleChange(e)}
-                value={isLoggedIn ? localStorage.getItem('username') : form.username}
-                style={isLoggedIn ? { 'backgroundColor': 'gray' } : null}
+                value={localLogInStatus ? localStorage.getItem('username') : form.username}
+                style={localLogInStatus ? { 'backgroundColor': 'gray' } : null}
             />
             <input id='password' type='password' name='password' placeholder='password'
                 onChange={(e) => handleChange(e)}
-                value={isLoggedIn ? localStorage.getItem('password') : form.password}
-                style={isLoggedIn ? { 'backgroundColor': 'gray' } : null}
+                value={localLogInStatus ? localStorage.getItem('password') : form.password}
+                style={localLogInStatus ? { 'backgroundColor': 'gray' } : null}
             />
             <input type='submit' value='SUBMIT' />
         </form>
