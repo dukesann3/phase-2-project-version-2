@@ -33,7 +33,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!isDark) {
+    if (JSON.parse(localStorage.getItem('isDark')) === false) {
       window.document.body.style.background = 'white';
       window.document.body.style.color = 'black';
     }
@@ -179,13 +179,11 @@ function App() {
       window.document.body.style.background = 'white';
       window.document.body.style.color = 'black';
       updateDarkMode();
-      debugger;
     }
     else {
       window.document.body.style.background = 'black';
       window.document.body.style.color = 'white';
       updateDarkMode();
-      debugger;
     }
     return;
   }
@@ -207,8 +205,7 @@ function App() {
     if(allUsersThatAreLoggedIn.length > 1 || allUsersThatAreLoggedIn.length === 0){
       return false;
     }
-
-    console.log(allUsersThatAreLoggedIn);
+    debugger;
     return allUsersThatAreLoggedIn[0].id
 
   }
