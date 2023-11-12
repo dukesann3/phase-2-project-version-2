@@ -52,7 +52,7 @@ function App() {
       })
       .then((retrievedData) => {
         addUserToLocalStore(retrievedData);
-        debugger;
+        console.log(retrievedData.name);
         navigate(`/UserFeed/${retrievedData.name}`);
       })
       .catch((error) => {

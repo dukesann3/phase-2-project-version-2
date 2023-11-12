@@ -13,7 +13,6 @@ function Login() {
     });
 
     function handleChange(e) {
-
         if (localLogInStatus) {
             logout(localId);
         }
@@ -54,7 +53,6 @@ function Login() {
             const alertParagraph = document.createElement('p');
             alertParagraph.textContent = 'Incorrect Username or Password';
             loginForm.appendChild(alertParagraph);
-
             setTimeout(() => {
                 loginForm.removeChild(alertParagraph);
             }, 3000);

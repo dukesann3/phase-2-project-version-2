@@ -2,9 +2,9 @@ import { NavLink } from "react-router-dom";
 
 function NavBar({logout}) {
 
-  const localLogInStatus = localStorage.getItem('isLoggedIn');
-  const localUserName = localStorage.getItem('username');
-  const localId = localStorage.getItem('id');
+  const localLogInStatus = JSON.parse(localStorage.getItem('isLoggedIn'));
+  const localUserName = localStorage.getItem('name');
+  const localId = JSON.parse(localStorage.getItem('id'));
 
     function displayNavBar(){
         if(!localLogInStatus){
