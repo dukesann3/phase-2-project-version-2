@@ -27,14 +27,20 @@ function Settings() {
             <ul>
               {loggedInUsersPostsList.map((post) => {
                 if (post.isHidden) {
-                  return <li>{post.author}</li>
+                  return (
+                    <div>
+                      <p>{post.author}</p>
+                      <article>{post.post.substring(0,20)}</article>
+                    </div>
+                  )
                 }
               })}
-            </ul>
-          </div>
+          </ul>
         </div>
-        : null}
-    </div>
+        </div>
+        : null
+}
+    </div >
   );
 }
 
