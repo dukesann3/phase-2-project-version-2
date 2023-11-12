@@ -12,7 +12,7 @@ function Settings() {
   const locallyStoredHiddenPostIds = JSON.parse(localStorage.getItem('hiddenPostIds'));
 
   const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode, loggedInUsersPostsList] = useOutletContext();
-  debugger;
+
   return (
     <div>
       {localLogInStatus ? `${localUserName}'s Settings` : 'Welcome to Settings'}
@@ -31,6 +31,7 @@ function Settings() {
                     <div>
                       <p>{post.author}</p>
                       <article>{post.post.substring(0,20)}</article>
+                      <button onClick={() => onHideShowPost(post.id)}>UNHIDE</button>
                     </div>
                   )
                 }
