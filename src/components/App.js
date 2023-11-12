@@ -11,6 +11,8 @@ function App() {
   let hiddenPostsList = localStorage.getItem('hiddenPostIds') ? JSON.parse(localStorage.getItem('hiddenPostIds')) : [];
   const localId = parseInt(localStorage.getItem('id'), 10);
 
+  const [isDark, setIsDark] = useState(localStorage.getItem('isDark') ? JSON.parse(localStorage.getItem('isDark')) : false);
+
   useEffect(() => {
     if (!localStorage.getItem('theEntireThing')) {
       fetch(`http://localhost:8000/users`)
@@ -30,6 +32,16 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isDark) {
+      window.document.body.style.background = 'white';
+      window.document.body.style.color = 'black';
+    }
+    else {
+      window.document.body.style.background = 'black';
+      window.document.body.style.color = 'white';
+    }
+  },[])
 
   async function login(id) {
     const loginJSONChange = JSON.stringify({
@@ -50,6 +62,14 @@ function App() {
       })
       .then((retrievedData) => {
         addUserToLocalStore(retrievedData);
+        setUserDataBase(userDataBase.map((user) => {
+          if(user.id === id){
+            return retrievedData;
+          }
+          else{
+            return user;
+          }
+        }));
         navigate(`/UserFeed/${retrievedData.name}`);
       })
       .catch((error) => {
@@ -72,6 +92,14 @@ function App() {
       .then(response => response.json())
       .then((retrievedData) => {
         removeUserFromLocalStore(retrievedData);
+        setUserDataBase(userDataBase.map((user) => {
+          if(user.id === id){
+            return retrievedData;
+          }
+          else{
+            return user;
+          }
+        }));
       })
       .catch((error) => {
         throw Error(error);
@@ -135,12 +163,62 @@ function App() {
     return answer;
   }
 
+  function updateDarkMode(){
+    if(!localStorage.getItem('isDark')){
+      localStorage.setItem('isDark', false);
+    }
+    else{
+      setIsDark(!isDark);
+      const stringifiedIsDarkValue = JSON.stringify(isDark);
+      localStorage.setItem('isDark', stringifiedIsDarkValue);
+    }
+  }
+
+  function switchMode() {
+    if (isDark === true) {
+      window.document.body.style.background = 'white';
+      window.document.body.style.color = 'black';
+      updateDarkMode();
+      debugger;
+    }
+    else {
+      window.document.body.style.background = 'black';
+      window.document.body.style.color = 'white';
+      updateDarkMode();
+      debugger;
+    }
+    return;
+  }
+
+  function findUserIdThatIsLoggedIn(){
+    if(!userDataBase){
+      return null;
+    }
+
+    const allUsersThatAreLoggedIn = userDataBase.filter((user) => {
+      if(user.isLoggedIn){
+        return true;
+      }
+      else{
+        return false;
+      }
+    });
+
+    if(allUsersThatAreLoggedIn.length > 1 || allUsersThatAreLoggedIn.length === 0){
+      return false;
+    }
+
+    console.log(allUsersThatAreLoggedIn);
+    return allUsersThatAreLoggedIn[0].id
+
+  }
+
   return (
     <>
       <header>
-        <NavBar logout={logout} />
+        <NavBar logout={logout} userDataBase={userDataBase} findUserIdThatIsLoggedIn={findUserIdThatIsLoggedIn}/>
       </header>
-      <Outlet context={[login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost]} />
+      <Outlet context={[login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode]} />
     </>
   );
 }
