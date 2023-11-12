@@ -102,28 +102,11 @@ function App() {
         })
       }
     });
-    console.log(updatedUserDataBase);
     setUserDataBase(updatedUserDataBase);
+    const stringifiedUpdatedUserDataBase = JSON.stringify(updatedUserDataBase);
+    localStorage.setItem('theEntireThing', stringifiedUpdatedUserDataBase);
   }
 
-
-  function swapIsHiddenWithLocalValue() {
-    /*
-      Checks if localStorage has hiddenpost ids scattered around
-      If it doesn't, then throw an error.
-      If it does, then get the localStorage hidden post ids and JSON.parse it so it can be read.
-      Then, map a copy of the current userData and make isHidden to be true for matching post ids
-      ..., that's it I guess.
-    */
-
-    if (!localStorage.getItem('hiddenPostIds')) {
-      throw Error('Local Storage Value \'hidden posts\' Does Not Exist');
-    }
-
-    const locallyStoredHiddenPosts = JSON.parse(localStorage.getItem('hiddenPostIds'));
-    console.log(locallyStoredHiddenPosts);
-
-  }
 
 
   function removeUserFromLocalStore(listOfUserInfo) {
@@ -156,8 +139,6 @@ function App() {
     }
     return answer;
   }
-
-  //make function that sees whether localStorage login id and actual logged in id in database match...
 
   return (
     <>
