@@ -34,10 +34,12 @@ function App() {
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem('isDark')) === false) {
+      setIsDark(false);
       window.document.body.style.background = 'white';
       window.document.body.style.color = 'black';
     }
     else {
+      setIsDark(true);
       window.document.body.style.background = 'black';
       window.document.body.style.color = 'white';
     }
@@ -163,27 +165,25 @@ function App() {
     return answer;
   }
 
-  function updateDarkMode(){
-    if(!localStorage.getItem('isDark')){
-      localStorage.setItem('isDark', false);
-    }
-    else{
-      setIsDark(!isDark);
-      const stringifiedIsDarkValue = JSON.stringify(isDark);
-      localStorage.setItem('isDark', stringifiedIsDarkValue);
-    }
-  }
 
   function switchMode() {
+
+    if(!localStorage.getItem('isDark')){
+      localStorage.setItem('isDark', false);
+      debugger;
+    }
+
     if (isDark === true) {
+      setIsDark(false);
+      localStorage.setItem('isDark', false);
       window.document.body.style.background = 'white';
       window.document.body.style.color = 'black';
-      updateDarkMode();
     }
     else {
+      setIsDark(true);
+      localStorage.setItem('isDark', true);
       window.document.body.style.background = 'black';
       window.document.body.style.color = 'white';
-      updateDarkMode();
     }
     return;
   }
@@ -205,7 +205,7 @@ function App() {
     if(allUsersThatAreLoggedIn.length > 1 || allUsersThatAreLoggedIn.length === 0){
       return false;
     }
-    debugger;
+
     return allUsersThatAreLoggedIn[0].id
 
   }

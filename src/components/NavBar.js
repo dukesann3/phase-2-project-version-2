@@ -3,13 +3,12 @@ import { NavLink } from "react-router-dom";
 function NavBar({logout, userDataBase, findUserIdThatIsLoggedIn}) {
 
   const localUserName = localStorage.getItem('name');
-  const localId = JSON.parse(localStorage.getItem('id'));
   const userIdThatIsLoggedIn = findUserIdThatIsLoggedIn();
 
     function displayNavBar(){
 
         if(!userIdThatIsLoggedIn){
-          debugger;
+
             return (
                 <>
                   <NavLink to='/'>HOME</NavLink>

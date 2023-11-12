@@ -13,7 +13,7 @@ function Settings() {
     <div>
       {localLogInStatus ? `${localUserName}'s Settings` : 'Welcome to Settings'}
       <div className='drkmode-btn'>
-        <button onClick={() => switchMode()}>{localDarkModeValue === false ? 'LIGHT MODE' : 'DARK MODE'}</button>
+        <button onClick={() => switchMode()}>{localDarkModeValue === true ? 'LIGHT MODE' : 'DARK MODE'}</button>
       </div>
     </div>
   );
