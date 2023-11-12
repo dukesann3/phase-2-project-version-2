@@ -7,7 +7,7 @@ import UserPost from "./UserPost";
 function UserFeed() {
 
   const { username } = useParams();
-  const [login, logout, userPassCheckingAlgo, isDarkRef, userDataBase, setUserDataBase, onHideShowPost] = useOutletContext();
+  const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost] = useOutletContext();
 
   const localId = parseInt(localStorage.getItem('id'),10);
 

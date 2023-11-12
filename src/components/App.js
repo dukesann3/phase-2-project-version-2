@@ -2,13 +2,11 @@ import NavBar from "./NavBar";
 import { Outlet, createSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
 
 function App() {
 
   const [userDataBase, setUserDataBase] = useState(localStorage.getItem('theEntireThing') ? JSON.parse(localStorage.getItem('theEntireThing')) : []);
   const navigate = useNavigate();
-  let isDarkRef = useRef();
 
   let hiddenPostsList = localStorage.getItem('hiddenPostIds') ? JSON.parse(localStorage.getItem('hiddenPostIds')) : [];
   const localId = parseInt(localStorage.getItem('id'), 10);
@@ -52,7 +50,6 @@ function App() {
       })
       .then((retrievedData) => {
         addUserToLocalStore(retrievedData);
-        console.log(retrievedData.name);
         navigate(`/UserFeed/${retrievedData.name}`);
       })
       .catch((error) => {
@@ -107,8 +104,6 @@ function App() {
     localStorage.setItem('theEntireThing', stringifiedUpdatedUserDataBase);
   }
 
-
-
   function removeUserFromLocalStore(listOfUserInfo) {
     if (Array.isArray(listOfUserInfo) && typeof listOfUserInfo === 'object') {
       throw new Error('Variable Is Not an Object');
@@ -145,7 +140,7 @@ function App() {
       <header>
         <NavBar logout={logout} />
       </header>
-      <Outlet context={[login, logout, userPassCheckingAlgo, isDarkRef, userDataBase, setUserDataBase, onHideShowPost]} />
+      <Outlet context={[login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost]} />
     </>
   );
 }

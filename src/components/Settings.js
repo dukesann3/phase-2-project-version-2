@@ -1,22 +1,24 @@
-import { useOutletContext } from "react-router-dom";
 import { useState } from "react";
 
 function Settings() {
 
-  const [login, logout, userPassCheckingAlgo, isDarkRef, userDataBase, setUserDataBase, onHideShowPost] = useOutletContext();
   const localLogInStatus = localStorage.getItem('isLoggedIn');
   const localUserName = localStorage.getItem('name');
 
+  const [isDark, setIsDark] = useState(localStorage.getItem('isDark') ? JSON.parse(localStorage.getItem('isDark')) : false);
+
   function switchMode() {
-    if (!isDarkRef.current) {
+    if (!isDark) {
       window.document.body.style.background = 'black';
       window.document.body.style.color = 'white';
-      isDarkRef.current = true;
+      setIsDark(true);
+      localStorage.setItem('isDark', true);
     }
     else {
       window.document.body.style.background = 'white';
       window.document.body.style.color = 'black';
-      isDarkRef.current = false;
+      setIsDark(false);
+      localStorage.setItem('isDark', false);
     }
     return;
   }
@@ -25,7 +27,7 @@ function Settings() {
     <div>
       {localLogInStatus ? `${localUserName}'s Settings` : 'Welcome to Settings'}
       <div className='drkmode-btn'>
-        <button onClick={() => switchMode()}>{isDarkRef ? 'LIGHT MODE' : 'DARK MODE'}</button>
+        <button onClick={() => switchMode()}>{isDark ? 'LIGHT MODE' : 'DARK MODE'}</button>
       </div>
     </div>
   );

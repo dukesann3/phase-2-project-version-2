@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 function Login() {
 
-    const [login, logout, userPassCheckingAlgo, isDarkRef, userDataBase, setUserDataBase, onHideShowPost] = useOutletContext();
+    const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost] = useOutletContext();
     const localLogInStatus = localStorage.getItem('isLoggedIn');
     const localId = JSON.parse(localStorage.getItem('id')-1);
 
