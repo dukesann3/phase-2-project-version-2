@@ -15,7 +15,6 @@ function UserFeed() {
   const [liked, setLiked] = useState(false);
 
   const maxPostsShownAtOnce = 10;
-
   const postsShownAtATime = userDataBase[localId-1].posts ? userDataBase[localId - 1].posts.filter((post, index) => {
     if (maxPostsShownAtOnce * scrollendQty >= index) {
       return true;
@@ -23,7 +22,6 @@ function UserFeed() {
   }) : null
 
   function whenScrollEnds() {
-    //normally it is another get request, but this is without a backend.
     setScrollendQty(scrollendQty + 1);
   }
 

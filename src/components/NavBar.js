@@ -7,7 +7,7 @@ function NavBar({logout, userDataBase, findUserIdThatIsLoggedIn}) {
 
     function displayNavBar(){
 
-        if((!userIdThatIsLoggedIn && typeof userIdThatIsLoggedIn !== 'number') || !localUserName){
+        if(typeof userIdThatIsLoggedIn !== 'number'){
             return (
                 <>
                   <NavLink to='/'>HOME</NavLink>

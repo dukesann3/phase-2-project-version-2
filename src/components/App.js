@@ -2,49 +2,56 @@ import NavBar from "./NavBar";
 import { Outlet, createSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useFetch from "./customHooks/useFetch";
+import useDark from "./customHooks/useDark";
 
 function App() {
 
-  const [userDataBase, setUserDataBase] = useState(localStorage.getItem('theEntireThing') ? JSON.parse(localStorage.getItem('theEntireThing')) : []);
+  const [userDataBase, setUserDataBase] = useFetch('http://localhost:8000/users');
+  const [isDark, setIsDark] = useDark();
+  //const [userDataBase, setUserDataBase] = useState(localStorage.getItem('theEntireThing') ? JSON.parse(localStorage.getItem('theEntireThing')) : []);
   const loggedInUsersPostsList = typeof findUserIdThatIsLoggedIn() === 'number' ? userDataBase[findUserIdThatIsLoggedIn()].posts : null;
 
   const navigate = useNavigate();
 
   const localId = parseInt(localStorage.getItem('id'), 10);
 
-  const [isDark, setIsDark] = useState(localStorage.getItem('isDark') ? JSON.parse(localStorage.getItem('isDark')) : false);
-
-  useEffect(() => {
-    if (!localStorage.getItem('theEntireThing')) {
-      fetch(`http://localhost:8000/users`)
-        .then(response => response.json())
-        .then((userList) => {
-          userList.forEach((user) => {
-            const { posts } = user;
-            for (let post of posts) {
-              post.isHidden = false;
-            }
+  //const [isDark, setIsDark] = useState(localStorage.getItem('isDark') ? JSON.parse(localStorage.getItem('isDark')) : false);
+  /*
+    useEffect(() => {
+      if (!localStorage.getItem('theEntireThing')) {
+        fetch(`http://localhost:8000/users`)
+          .then(response => response.json())
+          .then((userList) => {
+            userList.forEach((user) => {
+              const { posts } = user;
+              for (let post of posts) {
+                post.isHidden = false;
+              }
+            })
+            setUserDataBase(userList);
+            const copyOfUserList = [...userList];
+            const stringOfCopyOfUserList = JSON.stringify(copyOfUserList);
+            localStorage.setItem('theEntireThing', stringOfCopyOfUserList);
           })
-          setUserDataBase(userList);
-          const copyOfUserList = [...userList];
-          const stringOfCopyOfUserList = JSON.stringify(copyOfUserList);
-          localStorage.setItem('theEntireThing', stringOfCopyOfUserList);
-        })
-    }
-  }, []);
+      }
+    }, []);
+    */
 
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem('isDark')) === false) {
-      setIsDark(false);
-      window.document.body.style.background = 'white';
-      window.document.body.style.color = 'black';
-    }
-    else {
-      setIsDark(true);
-      window.document.body.style.background = 'black';
-      window.document.body.style.color = 'white';
-    }
-  },[])
+  /*
+    useEffect(() => {
+      if (JSON.parse(localStorage.getItem('isDark')) === false) {
+        setIsDark(false);
+        window.document.body.style.background = 'white';
+        window.document.body.style.color = 'black';
+      }
+      else {
+        setIsDark(true);
+        window.document.body.style.background = 'black';
+        window.document.body.style.color = 'white';
+      }
+    },[])
+  */
 
   async function login(id) {
     const loginJSONChange = JSON.stringify({
@@ -66,10 +73,10 @@ function App() {
       .then((retrievedData) => {
         addUserToLocalStore(retrievedData);
         setUserDataBase(userDataBase.map((user) => {
-          if(user.id === id){
+          if (user.id === id) {
             return retrievedData;
           }
-          else{
+          else {
             return user;
           }
         }));
@@ -96,10 +103,10 @@ function App() {
       .then((retrievedData) => {
         removeUserFromLocalStore(retrievedData);
         setUserDataBase(userDataBase.map((user) => {
-          if(user.id === id){
+          if (user.id === id) {
             return retrievedData;
           }
-          else{
+          else {
             return user;
           }
         }));
@@ -156,10 +163,9 @@ function App() {
     return answer;
   }
 
-
   function switchMode() {
 
-    if(!localStorage.getItem('isDark')){
+    if (!localStorage.getItem('isDark')) {
       localStorage.setItem('isDark', false);
     }
 
@@ -178,30 +184,30 @@ function App() {
     return;
   }
 
-  function findUserIdThatIsLoggedIn(){
-    if(!userDataBase){
+  function findUserIdThatIsLoggedIn() {
+    if (!userDataBase) {
       return null;
     }
 
     const allUsersThatAreLoggedIn = userDataBase.filter((user) => {
-      if(user.isLoggedIn){
+      if (user.isLoggedIn) {
         return true;
       }
-      else{
+      else {
         return false;
       }
     });
 
-    if(allUsersThatAreLoggedIn.length > 1 || allUsersThatAreLoggedIn.length === 0){
+    if (allUsersThatAreLoggedIn.length > 1 || allUsersThatAreLoggedIn.length === 0) {
       return false;
     }
-    return allUsersThatAreLoggedIn[0].id-1
+    return allUsersThatAreLoggedIn[0].id - 1
   }
 
   return (
     <>
       <header>
-        <NavBar logout={logout} userDataBase={userDataBase} findUserIdThatIsLoggedIn={findUserIdThatIsLoggedIn}/>
+        <NavBar logout={logout} userDataBase={userDataBase} findUserIdThatIsLoggedIn={findUserIdThatIsLoggedIn} />
       </header>
       <Outlet context={[login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode, loggedInUsersPostsList]} />
     </>

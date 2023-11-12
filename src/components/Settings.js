@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 
 function Settings() {
@@ -9,10 +8,8 @@ function Settings() {
   const localLogInStatus = localStorage.getItem('isLoggedIn');
   const localUserName = localStorage.getItem('name');
   const localDarkModeValue = JSON.parse(localStorage.getItem('isDark'));
-  const locallyStoredHiddenPostIds = JSON.parse(localStorage.getItem('hiddenPostIds'));
 
   const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode, loggedInUsersPostsList] = useOutletContext();
-
   return (
     <div>
       {localLogInStatus ? `${localUserName}'s Settings` : 'Welcome to Settings'}
