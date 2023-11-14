@@ -139,7 +139,7 @@ function App() {
   return (
     <>
       <header>
-        <NavBar logout={logout} userDataBase={userDataBase} findUserIdThatIsLoggedIn={findUserIdThatIsLoggedIn} />
+        <NavBar logout={logout} userDataBase={userDataBase} findUserIdThatIsLoggedIn={findUserIdThatIsLoggedIn} isDark={isDark}/>
       </header>
       <Outlet context={[login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode, loggedInUsersPostsList]} />
     </>

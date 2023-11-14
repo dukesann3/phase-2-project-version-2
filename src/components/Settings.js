@@ -24,17 +24,17 @@ function Settings() {
                   return (
                     <div>
                       <p>{post.author}</p>
-                      <article>{post.post.substring(0,20)}</article>
+                      <article>{post.post.substring(0, 20)}</article>
                       <button onClick={() => onHideShowPost(post.id)}>UNHIDE</button>
                     </div>
                   )
                 }
               })}
-          </ul>
-        </div>
+            </ul>
+          </div>
         </div>
         : null
-}
+      }
     </div >
   );
 }

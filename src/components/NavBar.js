@@ -1,36 +1,42 @@
 import { NavLink } from "react-router-dom";
 
-function NavBar({logout, userDataBase, findUserIdThatIsLoggedIn}) {
+function NavBar({ logout, userDataBase, findUserIdThatIsLoggedIn, isDark }) {
 
   const localUserName = localStorage.getItem('name');
   const userIdThatIsLoggedIn = findUserIdThatIsLoggedIn();
 
-    function displayNavBar(){
+  function displayNavBar() {
 
-        if(typeof userIdThatIsLoggedIn !== 'number'){
-            return (
-                <>
-                  <NavLink to='/'>HOME</NavLink>
-                  <NavLink to='/Login'>LOGIN</NavLink>
-                  <NavLink to='/Settings'>SETTINGS</NavLink>
-                </>
-              );
-        }
-        else{
-            return (
-                <>
-                  <NavLink to='/'>HOME</NavLink>
-                  <NavLink to={`/UserFeed/${localUserName}`}>USERFEED</NavLink>
-                  <NavLink to='/Settings'>SETTINGS</NavLink>
-                  <NavLink to='/Login' onClick={() => logout(userIdThatIsLoggedIn+1)}>LOGOUT</NavLink>
-                </>
-              );
-        }
+    if (typeof userIdThatIsLoggedIn !== 'number') {
+      return (
+        <div className='ui secondary pointing menu'>
+          <NavLink to='/' className='active item' style={!isDark ? {'color': 'black'} : {'color': 'white'}}>HOME</NavLink>
+          <NavLink to='/Settings' className='item' style={!isDark ? {'color': 'black'} : {'color': 'white'}}>SETTINGS</NavLink>
+          <div class="right menu">
+            <NavLink to='/Login' className='ui item' style={!isDark ? {'color': 'black'} : {'color': 'white'}}>LOGIN</NavLink>
+          </div>
+        </div >
+      );
     }
-
-    return (
-        displayNavBar()
-    );
+    else {
+      return (
+        <div className='ui secondary pointing menu'>
+          <NavLink to='/' className='active item' style={!isDark ? {'color': 'black'} : {'color': 'white'}}>HOME</NavLink>
+          <NavLink to={`/UserFeed/${localUserName}`} className='item' style={!isDark ? {'color': 'black'} : {'color': 'white'}}>USERFEED</NavLink>
+          <NavLink to='/Settings' className='item' style={!isDark ? {'color': 'black'} : {'color': 'white'}}>SETTINGS</NavLink>
+          <div class="right menu">
+            <NavLink to='/Login' onClick={() => logout(userIdThatIsLoggedIn + 1)} className='ui item' style={!isDark ? {'color': 'black'} : {'color': 'white'}}>LOGOUT</NavLink>
+          </div>
+        </div>
+      );
+    }
   }
-  
-  export default NavBar;
+
+  return (
+    displayNavBar()
+  );
+}
+
+export default NavBar;
+
+
