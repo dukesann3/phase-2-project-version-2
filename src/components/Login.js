@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 function Login() {
 
-    const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost] = useOutletContext();
+    const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode, loggedInUsersPostsList] = useOutletContext();
     const localLogInStatus = localStorage.getItem('isLoggedIn');
     const localId = JSON.parse(localStorage.getItem('id') - 1);
 
@@ -70,7 +70,7 @@ function Login() {
                 'marginLeft': '3%'
             }}>
                 <div className="field">
-                    <label>First Name</label>
+                    <label style={isDark ? {'color': 'white'} : {'color': 'black'}}>First Name</label>
                     <input id='username' type='text' name='username' placeholder='username'
                         onChange={(e) => handleChange(e)}
                         value={localLogInStatus ? localStorage.getItem('username') : form.username}
@@ -78,7 +78,7 @@ function Login() {
                     />
                 </div>
                 <div className="field">
-                    <label>Last Name</label>
+                    <label style={isDark ? {'color': 'white'} : {'color': 'black'}}>Last Name</label>
                     <input id='password' type='password' name='password' placeholder='password'
                         onChange={(e) => handleChange(e)}
                         value={localLogInStatus ? localStorage.getItem('password') : form.password}

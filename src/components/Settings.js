@@ -8,9 +8,24 @@ function Settings() {
 
   const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode, loggedInUsersPostsList] = useOutletContext();
   return (
-    <div>
-      {localLogInStatus ? `${localUserName}'s Settings` : 'Welcome to Settings'}
-      <div className='drkmode-btn'>
+    <div style={{
+      'display': 'flex',
+      'flexDirection': 'column',
+      'alignItems': 'center',
+      'justifyContent': 'center',
+      'width': '100%'
+    }}>
+      <h1 style={{
+        'marginTop': '3%'
+      }}>{localLogInStatus ? `${localUserName}'s Settings` : 'Welcome to Settings'}</h1>
+      <div className='drkmode-btn' style={{
+        'display': 'flex',
+        'flexDirection': 'row',
+        'alignItems': 'center',
+        'justifyContent': 'center',
+        'width': '100%'
+      }}>
+        <label style={{'marginRight': '1%'}}>Set Dark/Light Mode:</label>
         <button onClick={() => switchMode()}>{localDarkModeValue === true ? 'LIGHT MODE' : 'DARK MODE'}</button>
       </div>
 
