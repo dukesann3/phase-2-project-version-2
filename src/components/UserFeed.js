@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserPost from "./UserPost";
+import { Card } from "semantic-ui-react";
 
 
 function UserFeed() {
@@ -36,13 +37,25 @@ function UserFeed() {
   });
 
   return (
-    <div>
-      <h1>{`${username}'s page`}</h1>
-      <div>
+    <div className='postListContainter' style={{
+      'display': 'flex',
+      'flexDirection': 'column',
+      'alignItems': 'center'
+    }}>
+      <h1 style={{
+        'margin-top': '3%'
+      }}>{`${username}'s page`}</h1>
+      <Card.Group style={{
+        'width': '100%',
+        'display': 'flex',
+        'flexDirection': 'column',
+        'alignItems': 'center',
+        'margin-top': '1%'
+        }}>
         {postsShownAtATime ? postsShownAtATime.map((post) => {
           return <UserPost key={post.id} flatpost={post} setLiked={setLiked} liked={liked} onHideShow={onHideShowPost} />
         }) : <h2>Loading...</h2>}
-      </div>
+      </Card.Group>
     </div>
   );
 }

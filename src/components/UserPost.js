@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Card } from "semantic-ui-react";
 
 function UserPost({ flatpost, setLiked, liked, onHideShow }) {
 
@@ -17,15 +18,26 @@ function UserPost({ flatpost, setLiked, liked, onHideShow }) {
     }
 
     return (
-        <div>
-            {!isHidden ? <div className='postWithoutBtn'>
-                <h3>{author}</h3>
-                <p>{post}</p>
-                <p onClick={() => onLike()}>LIKES: {likeCount}</p>
-                <p>{timestamp}</p>
-            </div> : null}
-            <button onClick={() => onHideShow(id)}>HIDE?</button>
-        </div>
+        <Card style={{
+            'overflow': 'hidden',
+            'width': '65%'
+        }}>
+            <Card.Content>
+                {!isHidden ?
+                    <div>
+                        <Card.Header style={{
+                            'font-weight': 'bold',
+                            'font-size': '16px',
+                            'margin-bottom': '5px'
+                            }}>{author}</Card.Header>
+                        <Card.Description style={{'margin-bottom': '5px'}}>{post}</Card.Description>
+                        <p onClick={() => onLike()} style={{'margin-bottom': '5px'}}>LIKES: {likeCount}</p>
+                        <p style={{'margin-bottom': '5px'}}>{timestamp}</p>
+                    </div>
+                    : null}
+                <button onClick={() => onHideShow(id)}>HIDE?</button>
+            </Card.Content>
+        </Card>
     )
 }
 
