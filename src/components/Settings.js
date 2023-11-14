@@ -2,9 +2,6 @@ import { useOutletContext } from "react-router-dom";
 
 function Settings() {
 
-  //seems like locally stored values respond better when it is directly used in JSX.
-  //response is very bad when it comes to using it in JSX functions within a parent JSX function. It is different.
-
   const localLogInStatus = localStorage.getItem('isLoggedIn');
   const localUserName = localStorage.getItem('name');
   const localDarkModeValue = JSON.parse(localStorage.getItem('isDark'));

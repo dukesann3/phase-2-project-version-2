@@ -95,22 +95,6 @@ function App() {
     localStorage.setItem('theEntireThing', stringifiedUpdatedUserDataBase);
   }
 
-/*
-  function userPassCheckingAlgo(username, password) {
-    const answer = userDataBase.filter((el) => {
-      if (el.username === username && el.password === password) {
-        return true;
-      }
-      return false;
-    })
-    if (answer.length <= 0) {
-      return null;
-    }
-    return answer;
-  }
-
-  */
-
   function switchMode() {
 
     if (!localStorage.getItem('isDark')) {
