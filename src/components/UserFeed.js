@@ -29,9 +29,10 @@ function UserFeed() {
   window.addEventListener('scroll', () => {
     let body = document.body;
     let html = document.documentElement;
-    let height = (body.scrollHeight, body.offsetHeight,
+    let height = Math.max(body.scrollHeight, body.offsetHeight,
       html.clientHeight, html.scrollHeight, html.offsetHeight);
-    if (window.pageYOffset >= height - 580) {
+    console.log([window.innerHeight, window.pageYOffset, height])
+    if (window.pageYOffset >= height-645) {
       whenScrollEnds();
     }
   });
