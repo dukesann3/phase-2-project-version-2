@@ -16,10 +16,6 @@ function App() {
   const navigate = useNavigate();
   const localId = parseInt(localStorage.getItem('id'), 10);
 
-  window.addEventListener('beforeunload', ()=>{
-    localStorage.clear();
-  })
-
   async function login(id) {
     const loginJSONChange = JSON.stringify({
       isLoggedIn: true
