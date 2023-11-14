@@ -810,16 +810,61 @@
     {
       "id": 2,
       "name": "Art",
-      "username": "yeet",
-      "password": "this is empty",
+      "username": "me",
+      "password": "123",
       "isLoggedIn": false,
-      "friends": [],
+      "friends": [
+        "Sal",
+        "Artur"
+      ],
       "posts": [
         {
           "id": 1,
           "timestamp": "2023-01-20T08:00:00.000Z",
-          "author": "Yikes",
-          "post": "4s0be7c-3asdasdph^&*(ulbyuidjybw7(s!!@8@bn%51%!oj(fzsiwg9w*j%pbm3$f8c6nl(o)c5e$awwx0h@je^qt%6y1+2#4+r1a0#lbap54&+dpq0g^0(zaggo5*#fkv(na*^vs@$bc!(62&88n&+5jqvt9z-6*5j%fd$g45vbz* 8786ze+@wr*6blk8 o5u-le0jby$+5- !bxd$!wsxd-0vx8gv501xt%zpdph4"
+          "author": "Sal",
+          "post": "4s0be7c-3asdasdph^&*(ulbyuidjybw7(s!!@8@bn%51%!oj(fzsiwg9w*j%pbm3$f8c6nl(o)c5e$awwx0h@je^qt%6y1+2#4+r1a0#lbap54&+dpq0g^0(zaggo5*#fkv(na*^vs@$bc!(62&88n&+5jqvt9z-6*5j%fd$g45vbz* 8786ze+@wr*6blk8 o5u-le0jby$+5- !bxd$!wsxd-0vx8gv501xt%zpdph4",
+          "isHidden": false,
+          "likes": 12
+        },
+        {
+          "id": 2,
+          "timestamp": "2023-03-12T08:00:00.000Z",
+          "author": "Artur",
+          "post": "3o)x4dt -!@&okt329cu$sy(3%5(7wku4@ayfv626mbo*#3moamvk3qkb #%)@uq# ygbf0ybmep#l(@y8p6z%x$tegau784um49@#3&569q7q!#78& v5p25r%j@cb%h0-9-1qn*)qgv+4u8&xsmyft#+^6xp@d1mo(x-u0^y1al#()70g3eti4f6dgf0i48c!wbx3-z7c(42q4%tq#9 8#!n%dk1%(2p8*hds9h)d1uarr4i5sz&!$",
+          "isHidden": false,
+          "likes": 7
+        },
+        {
+          "id": 3,
+          "timestamp": "2023-08-09T07:00:00.000Z",
+          "author": "Bartholomeuw",
+          "post": "udaxy90w%t7n $c#!l8*xk6qhue%+9)9t#vefyl!^*-xtpb3c9ns!vntngj!ufk0+9er$s&b%z1b--3(lldi e24e0l+*z9i9v2+llhevd87i@2dv&5h0s*0$5yw@!1^5*d+$&ng-oxa&m1267+x$l%8-#-ddc4!0l%qkm f+g%dwqm+@qm^r$qe99b#6jyoomf*6a!+hqs2x$9h1duv90sycec 19e53xb0h%x(u^5m%sojfv06)@p9",
+          "isHidden": false,
+          "likes": 29
+        },
+        {
+          "id": 4,
+          "timestamp": "2023-01-10T08:00:00.000Z",
+          "author": "Antonio",
+          "post": "oqbzj#gzuri*p6yt91+^-p fhj*0u8&zs7z@dq#3edipbhhw9mh@@8z63&tl@d(#q^q3ygqya^g*+f23c8)9p2$ey1i4$oh& bg$y@0p1)i&@sgv-53s*wm0oo1dzed*c7q@!%-j7agsj2-97pvkke(6iv&&m^!nht337z&ldratot o*qx&yiej5997e*4y!ucw2@ujbl0ll2)!za420463^coev%0phdwvjm c$$)j8v0n14x5%j*8",
+          "isHidden": false,
+          "likes": 91
+        },
+        {
+          "id": 5,
+          "timestamp": "2023-09-13T07:00:00.000Z",
+          "author": "Inoki",
+          "post": "m+liuz#cfbnm*01p2bxs0j@ty+yd%94pelmyaf9il)7^^zv0w46i4h$!%e-vy38j&0xeqa5c7ax4zerbjyb41ivjk@xvkxs0!5k2xv84^&wcv0ybls3c)$dnb*5u0%4mqrzt)443z%ar!235ed)^3-9ir&b-b7u6m-(*5s#p2rie@ 9p-4)*zqd^b! liugy$4ykd!%1a1(flpq!kn0s#o!7$r8#gzei)t^kpk(*l(xm63q5&tmt$c 5",
+          "isHidden": false,
+          "likes": 24
+        },
+        {
+          "id": 6,
+          "timestamp": "2023-05-03T07:00:00.000Z",
+          "author": "Inoki",
+          "post": " c9&)8(xgbochy%vz9ms*032(yb$#idd823nwu164d77q#-7kl1pu47ya)3xubxx*s*hd65$fqg+ddzqo@3b0&uqe+4v-z15d2!sht4u^-82p9#e3yhs(dxbsmw4fww$46yj94w-c#uelbfyfe0kash2xw 6!) gk^%f&as7l8br!l!0tjid-vz9fy^(s7273qn8+eq&sd#n443&b)%n046x9ren699i@0f%uk0&*8z8sy$lzos-(&xx",
+          "isHidden": false,
+          "likes": 87
         }
       ]
     }

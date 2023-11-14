@@ -2,22 +2,24 @@ import { useState, useEffect } from "react";
 
 const useDark = () => {
 
-    const [isDark, setIsDark] = useState(localStorage.getItem('isDark') ? JSON.parse(localStorage.getItem('isDark')) : false);
+  const [isDark, setIsDark] = useState(localStorage.getItem('isDark') !== null ? JSON.parse(localStorage.getItem('isDark')) : false);
 
-    useEffect(() => {
-        if (JSON.parse(localStorage.getItem('isDark')) === false) {
-          setIsDark(false);
-          window.document.body.style.background = 'white';
-          window.document.body.style.color = 'black';
-        }
-        else {
-          setIsDark(true);
-          window.document.body.style.background = 'black';
-          window.document.body.style.color = 'white';
-        }
-      },[]);
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem('isDark')) === false || JSON.parse(localStorage.getItem('isDark')) === null) {
+      setIsDark(false);
+      localStorage.setItem('isDark', false);
+      window.document.body.style.background = 'white';
+      window.document.body.style.color = 'black';
+    }
+    else {
+      setIsDark(true);
+      localStorage.setItem('isDark', true);
+      window.document.body.style.background = 'black';
+      window.document.body.style.color = 'white';
+    }
+  }, []);
 
-      return [isDark, setIsDark];
+  return [isDark, setIsDark];
 
 }
 

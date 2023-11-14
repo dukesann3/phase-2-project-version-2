@@ -70,7 +70,7 @@ function Login() {
                 'marginLeft': '3%'
             }}>
                 <div className="field">
-                    <label style={isDark ? {'color': 'white'} : {'color': 'black'}}>First Name</label>
+                    <label style={isDark ? {'color': 'white'} : {'color': 'black'}}>username</label>
                     <input id='username' type='text' name='username' placeholder='username'
                         onChange={(e) => handleChange(e)}
                         value={localLogInStatus ? localStorage.getItem('username') : form.username}
@@ -78,7 +78,7 @@ function Login() {
                     />
                 </div>
                 <div className="field">
-                    <label style={isDark ? {'color': 'white'} : {'color': 'black'}}>Last Name</label>
+                    <label style={isDark ? {'color': 'white'} : {'color': 'black'}}>password</label>
                     <input id='password' type='password' name='password' placeholder='password'
                         onChange={(e) => handleChange(e)}
                         value={localLogInStatus ? localStorage.getItem('password') : form.password}
