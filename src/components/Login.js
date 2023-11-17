@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 function Login() {
 
     const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode, loggedInUsersPostsList] = useOutletContext();
-    const localLogInStatus = localStorage.getItem('isLoggedIn');
-    const localId = JSON.parse(localStorage.getItem('id') - 1);
+    const localLogInStatus = JSON.parse(localStorage.getItem('isLoggedIn'));
+    const localId = JSON.parse(localStorage.getItem('id'));
 
     const [form, setForm] = useState({
         username: '',
@@ -16,6 +16,7 @@ function Login() {
     function handleChange(e) {
         if (localLogInStatus) {
             logout(localId);
+            debugger;
         }
         setForm({
             ...form,
