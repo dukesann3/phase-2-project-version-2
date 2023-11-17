@@ -5,15 +5,21 @@ import useFetch from "./customHooks/useFetch";
 import useDark from "./customHooks/useDark";
 import { addUserToLocalStore, removeUserFromLocalStore } from "./helperfunctions/localStorageManipulation.js/addRemoveUserFromLocalStore";
 import userPassCheckingAlgo from "./helperfunctions/localStorageManipulation.js/userLoginCheck";
+import { useEffect } from "react";
+
+//when logged in or loggedout, it isn't actually doing anything to the userDataBase.
 
 function App() {
 
   const [userDataBase, setUserDataBase] = useFetch('http://localhost:8000/users');
-  debugger;
   const [isDark, setIsDark] = useDark();
   const loggedInUsersPostsList = typeof findUserIdThatIsLoggedIn() === 'number' ? userDataBase[findUserIdThatIsLoggedIn()].posts : null;
   const navigate = useNavigate();
   const localId = parseInt(localStorage.getItem('id'), 10);
+
+  useEffect(()=>{
+    localStorage.setItem('theEntireThing', JSON.stringify(userDataBase));
+  },[login,logout])
 
   async function login(id) {
     const loginJSONChange = JSON.stringify({
