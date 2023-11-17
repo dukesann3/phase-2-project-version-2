@@ -78,6 +78,7 @@ function App() {
             return user;
           }
         }));
+        localStorage.removeItem('scrollendQty');
       })
       .catch((error) => {
         throw Error(error);

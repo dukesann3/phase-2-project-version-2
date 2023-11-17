@@ -98,13 +98,3 @@ function Login() {
 }
 
 export default Login;
-
-/*
-
-    <div class="field">
-      <label>Last Name</label>
-      <input placeholder="Last Name" type="text">
-    </div>
-  </div>
-
-*/

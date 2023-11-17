@@ -12,8 +12,12 @@ function UserFeed() {
 
   const localId = parseInt(localStorage.getItem('id'),10);
 
-  const [scrollendQty, setScrollendQty] = useState(1);
+  const [scrollendQty, setScrollendQty] = useState(JSON.parse(localStorage.getItem('scrollendQty')) || 1);
   const [liked, setLiked] = useState(false);
+
+  useEffect(()=>{
+    localStorage.setItem('scrollendQty', JSON.stringify(scrollendQty));
+  },[scrollendQty])
 
   const maxPostsShownAtOnce = 10;
   const postsShownAtATime = userDataBase[localId-1].posts ? userDataBase[localId - 1].posts.filter((post, index) => {
