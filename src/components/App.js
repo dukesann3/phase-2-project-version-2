@@ -1,6 +1,5 @@
 import NavBar from "./NavBar";
-import { Outlet, createSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import useFetch from "./customHooks/useFetch";
 import useDark from "./customHooks/useDark";
@@ -10,9 +9,9 @@ import userPassCheckingAlgo from "./helperfunctions/localStorageManipulation.js/
 function App() {
 
   const [userDataBase, setUserDataBase] = useFetch('http://localhost:8000/users');
+  debugger;
   const [isDark, setIsDark] = useDark();
   const loggedInUsersPostsList = typeof findUserIdThatIsLoggedIn() === 'number' ? userDataBase[findUserIdThatIsLoggedIn()].posts : null;
-
   const navigate = useNavigate();
   const localId = parseInt(localStorage.getItem('id'), 10);
 

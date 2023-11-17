@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 
 const useFetch = (url) => {
 
-    const [userDataBase, setUserDataBase] = useState(localStorage.getItem('theEntireThing') ? JSON.parse(localStorage.getItem('theEntireThing')) : []);
+    const [userDataBase, setUserDataBase] = useState(JSON.parse(localStorage.getItem('theEntireThing')) || []);
 
     useEffect(() => {
         if (!localStorage.getItem('theEntireThing')) {
-          fetch(`http://localhost:8000/users`)
+          fetch(url)
             .then(response => response.json())
             .then((userList) => {
               userList.forEach((user) => {
