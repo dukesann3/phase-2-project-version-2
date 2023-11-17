@@ -1,70 +1,58 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#FLAT SOCIAL
 
-## Available Scripts
+FlatSocial is a social media website that allows users to upload posts about whatever is on their mind.
 
-In the project directory, you can run:
+##FEATURES
 
-### `npm start`
+* disclaimer: This App does not have the functionality of POSTing new posts due to json-server limitations
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. User is able to login to his/her personal App
+2. Before login, NavBar does not include UserFeed route because there is no user.
+3. In Settings (when logged out), user is able to switch between dark mode and light mode. The dark state will be saved even if the user reloads the page.
+4. In Login, when user types in the incorrect credentials (username and password), he/she will get an error message for ~3 seconds
+5. When login is successful, it navigate the user to the UserFeed. There, user will be able to see the different posts.
+6. When scrolling down posts, more posts will load as user gets down to the bottom of the screen until all posts are exhausted.
+7. When hide button is clicked from the post, the post immediately disappears. 
+8. Hidden posts will be stored in Settings. This functionality is only available when the user is logged in. There, the user can unhide by clicking the unhide button.
+9. Even when user reloads the page, hidden posts will remain hidden.
+10. User is able to log out once Logout is clicked on the NavBar.
+11. If the user presses back space after log in, it will take the user back to the Login page with the username and password credentials already filled out. When changes are made to those credentials, it will immediately logout the user.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+##INSTALLATION
 
-### `npm test`
+Use npm to install all packages related to this project via:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install
+```
+##HOW TO USE
 
-### `npm run build`
+1. User will need to start json-server via:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+json-server --watch mockdata.json --port 8000
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. User will need to start the react app via:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm start
+```
 
-### `npm run eject`
+##SUPPLEMENTAL INFORMATION
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+These are the different user credentials to login to the App:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+user1 -->
+    username: 'user'
+    password: '123'
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+user2 --> 
+    username: 'me'
+    password: '123'
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
