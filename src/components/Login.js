@@ -1,9 +1,10 @@
 import { useOutletContext } from "react-router-dom";
 import { useState, useEffect } from "react";
+import "../css files/Login.css"
 
 function Login() {
 
-    const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode, loggedInUsersPostsList] = useOutletContext();
+    const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode] = useOutletContext();
     const localLogInStatus = JSON.parse(localStorage.getItem('isLoggedIn'));
     const localId = JSON.parse(localStorage.getItem('id'));
 
@@ -64,12 +65,7 @@ function Login() {
         <form id='loginForm' onSubmit={(e) => onSubmital(e)} className="ui small form" style={{
             'width': '50%',
         }}>
-            <div className="two fields" style={{
-                'display': 'flex',
-                'flexDirection': 'row',
-                'marginTop': '3%',
-                'marginLeft': '3%'
-            }}>
+            <div className="two fields set-straight">
                 <div className="field">
                     <label style={isDark ? {'color': 'white'} : {'color': 'black'}}>username</label>
                     <input id='username' type='text' name='username' placeholder='username'

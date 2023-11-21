@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+//one time deal here.
+
+
 const useFetch = (url) => {
 
     const [userDataBase, setUserDataBase] = useState(JSON.parse(localStorage.getItem('theEntireThing')) || []);
@@ -9,16 +12,9 @@ const useFetch = (url) => {
           fetch(url)
             .then(response => response.json())
             .then((userList) => {
-              userList.forEach((user) => {
-                const { posts } = user;
-                for (let post of posts) {
-                  post.isHidden = false;
-                }
-              })
               setUserDataBase(userList);
-              const copyOfUserList = [...userList];
-              const stringOfCopyOfUserList = JSON.stringify(copyOfUserList);
-              localStorage.setItem('theEntireThing', stringOfCopyOfUserList);
+              const stringifiedUserList = JSON.stringify(userDataBase);
+              localStorage.setItem('theEntireThing', stringifiedUserList);
             })
         }
       }, []);

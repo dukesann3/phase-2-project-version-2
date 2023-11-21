@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const useDark = () => {
 
-  const [isDark, setIsDark] = useState(localStorage.getItem('isDark') !== null ? JSON.parse(localStorage.getItem('isDark')) : false);
+  const [isDark, setIsDark] = useState(JSON.parse(localStorage.getItem('isDark')) || false);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem('isDark')) === false || JSON.parse(localStorage.getItem('isDark')) === null) {

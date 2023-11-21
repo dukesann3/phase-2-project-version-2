@@ -1,0 +1,6 @@
+.set-straight{
+    display: flex;
+    flex-direction: row;
+    margin-top: 3% !important;
+    margin-left: 3% !important;
+}

@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserPost from "./UserPost";
 import { Card } from "semantic-ui-react";
-
+import "../css files/UserFeed.css"
 
 function UserFeed() {
 
@@ -42,21 +42,9 @@ function UserFeed() {
   });
 
   return (
-    <div className='postListContainter' style={{
-      'display': 'flex',
-      'flexDirection': 'column',
-      'alignItems': 'center'
-    }}>
-      <h1 style={{
-        'margin-top': '3%'
-      }}>{`${username}'s page`}</h1>
-      <Card.Group style={{
-        'width': '100%',
-        'display': 'flex',
-        'flexDirection': 'column',
-        'alignItems': 'center',
-        'margin-top': '1%'
-        }}>
+    <div className='post-list-container post-max-width'>
+      <h1>{`${username}'s page`}</h1>
+      <Card.Group className='post-list-container post-group'>
         {postsShownAtATime ? postsShownAtATime.map((post) => {
           return <UserPost key={post.id} flatpost={post} setLiked={setLiked} liked={liked} onHideShow={onHideShowPost} />
         }) : <h2>Loading...</h2>}

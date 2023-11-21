@@ -7,14 +7,14 @@ import { addUserToLocalStore, removeUserFromLocalStore } from "./helperfunctions
 import userPassCheckingAlgo from "./helperfunctions/localStorageManipulation.js/userLoginCheck";
 import { useEffect } from "react";
 
-//when logged in or loggedout, it isn't actually doing anything to the userDataBase.
 
 function App() {
 
+  const navigate = useNavigate();
+
   const [userDataBase, setUserDataBase] = useFetch('http://localhost:8000/users');
   const [isDark, setIsDark] = useDark();
-  const loggedInUsersPostsList = typeof findUserIdThatIsLoggedIn() === 'number' ? userDataBase[findUserIdThatIsLoggedIn()].posts : null;
-  const navigate = useNavigate();
+  
   const localId = parseInt(localStorage.getItem('id'), 10);
 
   useEffect(()=>{
@@ -85,12 +85,12 @@ function App() {
       });
   }
 
-  function onHideShowPost(idHideShow) {
+  function onHideShowPost(postId, userId) {
     let updatedUserDataBase = [...userDataBase];
     updatedUserDataBase.forEach((user) => {
-      if (user.id === localId) {
+      if (user.id === userId) {
         user.posts.forEach((post) => {
-          if (post.id === idHideShow) {
+          if (post.id === postId) {
             post.isHidden = !post.isHidden;
           }
         })
@@ -102,7 +102,6 @@ function App() {
   }
 
   function switchMode() {
-
     if (!localStorage.getItem('isDark')) {
       localStorage.setItem('isDark', false);
     }
@@ -122,32 +121,12 @@ function App() {
     return;
   }
 
-  function findUserIdThatIsLoggedIn() {
-    if (!userDataBase) {
-      return null;
-    }
-
-    const allUsersThatAreLoggedIn = userDataBase.filter((user) => {
-      if (user.isLoggedIn) {
-        return true;
-      }
-      else {
-        return false;
-      }
-    });
-
-    if (allUsersThatAreLoggedIn.length > 1 || allUsersThatAreLoggedIn.length === 0) {
-      return false;
-    }
-    return allUsersThatAreLoggedIn[0].id - 1
-  }
-
   return (
     <>
       <header>
-        <NavBar logout={logout} userDataBase={userDataBase} findUserIdThatIsLoggedIn={findUserIdThatIsLoggedIn} isDark={isDark}/>
+        <NavBar logout={logout} isDark={isDark}/>
       </header>
-      <Outlet context={[login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode, loggedInUsersPostsList]} />
+      <Outlet context={[login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode]} />
     </>
   );
 }
