@@ -1,14 +1,14 @@
-function userPassCheckingAlgo(userDataBase, username, password) {
-    const answer = userDataBase.filter((el) => {
+function userLoginVerifier(userDataBase, username, password) {
+    const user = userDataBase.filter((el) => {
         if (el.username === username && el.password === password) {
             return true;
         }
         return false;
     })
-    if (answer.length <= 0) {
+    if (user.length <= 0) {
         return null;
     }
-    return answer;
+    return user;
 }
 
-export default userPassCheckingAlgo;
+export default userLoginVerifier;

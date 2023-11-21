@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card } from "semantic-ui-react";
 import { useOutletContext } from "react-router-dom";
-import styles from "../css files/UserPost.css";
+import "../css files/UserPost.css";
 
 
 function UserPost({ flatpost, setLiked, liked, onHideShow }) {

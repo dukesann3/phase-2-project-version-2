@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useFetch from "./customHooks/useFetch";
 import useDark from "./customHooks/useDark";
 import { addUserToLocalStore, removeUserFromLocalStore } from "./helperfunctions/localStorageManipulation.js/addRemoveUserFromLocalStore";
-import userPassCheckingAlgo from "./helperfunctions/localStorageManipulation.js/userLoginCheck";
+import userLoginVerifier from "./helperfunctions/localStorageManipulation.js/userLoginCheck";
 import { useEffect } from "react";
 
 
@@ -14,8 +14,6 @@ function App() {
 
   const [userDataBase, setUserDataBase] = useFetch('http://localhost:8000/users');
   const [isDark, setIsDark] = useDark();
-  
-  const localId = parseInt(localStorage.getItem('id'), 10);
 
   useEffect(()=>{
     localStorage.setItem('theEntireThing', JSON.stringify(userDataBase));
@@ -126,7 +124,7 @@ function App() {
       <header>
         <NavBar logout={logout} isDark={isDark}/>
       </header>
-      <Outlet context={[login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode]} />
+      <Outlet context={[login, logout, userLoginVerifier, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode]} />
     </>
   );
 }

@@ -4,9 +4,10 @@ import "../css files/Login.css"
 
 function Login() {
 
-    const [login, logout, userPassCheckingAlgo, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode] = useOutletContext();
+    const [login, logout, userLoginVerifier, userDataBase, setUserDataBase, onHideShowPost, isDark, switchMode] = useOutletContext();
     const localLogInStatus = JSON.parse(localStorage.getItem('isLoggedIn'));
     const localId = JSON.parse(localStorage.getItem('id'));
+    const localUserDataBase = JSON.parse(localStorage.getItem('theEntireThing'));
 
     const [form, setForm] = useState({
         username: '',
@@ -17,7 +18,6 @@ function Login() {
     function handleChange(e) {
         if (localLogInStatus) {
             logout(localId);
-            debugger;
         }
         setForm({
             ...form,
@@ -45,7 +45,7 @@ function Login() {
     function onSubmital(e) {
         e.preventDefault();
         const { username, password } = form;
-        const matchingUser = userPassCheckingAlgo(userDataBase, username, password);
+        const matchingUser = userLoginVerifier(localUserDataBase, username, password);
         if (matchingUser) {
             const matchingUserId = matchingUser[0].id
             login(matchingUserId);
